@@ -108,6 +108,8 @@ if uploaded_file:
                     - Available DataFrame: `df`
                     - Columns: {df_columns}
                     - Query: {user_query}
+                    - DataFrame Preview: {df_str}
+                    - Data Types: {df_types}
 
                     ### Core Requirements
                     1. Each task must be:
@@ -154,7 +156,7 @@ if uploaded_file:
 
                     **Provide only the task plan. Do not include any additional explanations or commentary or python code.**
                     """
-                    ).format(df_columns=', '.join(df.columns),user_query=user_query)
+                    ).format(df_str=df.head().to_markdown(), df_columns=', '.join(df.columns),df_types="\n".join([f"- **{col}**: {dtype}" for col, dtype in df.items()]),user_query=user_query)
                     
                     response = client.chat.completions.create(
                         model="gpt-4o-mini",
@@ -192,15 +194,13 @@ if uploaded_file:
 
                         Your responses will be direct code implementations without explanations, focusing purely on executing the provided task plan with optimal efficiency.
 
-                        ### Context
-                        - DataFrame: `df`
-                        - Preview: {df_str}
-                        - Columns: {df_columns}
-                        - Data Types: {df_types}
-                        - Query: {user_query}
-
                         ### Execution Plan
                         - {df_task_plan}
+
+                        ### Context
+                        - DataFrame: `df`
+                        - Columns: {df_columns}
+                        - Query: {user_query}
 
                         ### Core Requirements
 
@@ -256,7 +256,7 @@ if uploaded_file:
                         Step-by-Step implementation of the task plan based on the `df_task_plan`.
                         #Task-1, #Task2... with proper task description
                         """
-                    ).format(df_str=df.head().to_markdown(), df_columns=', '.join(df.columns),df_types="\n".join([f"- **{col}**: {dtype}" for col, dtype in df.items()]),user_query=user_query,df_task_plan=response.choices[0].message.content)
+                    ).format(df_columns=', '.join(df.columns),user_query=user_query,df_task_plan=response.choices[0].message.content)
                         
                         response = client.chat.completions.create(
                             model="gpt-4o-mini",
@@ -285,7 +285,7 @@ if uploaded_file:
                         graph_visual = {}
 
                         if "output_dict" in exec_locals:
-                            st.subheader("📊 Analysis Results")
+                            
                             for key, value in exec_locals["output_dict"].items():
                                 if isinstance(value, pd.DataFrame):
                                         st.write(f"📈 {key}")
