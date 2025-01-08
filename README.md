@@ -96,14 +96,6 @@ Create a `.env` file with the following variables (optional):
 ```
 OPENAI_API_KEY=your_api_key_here
 ```
-
-## Contributing 🤝
-
-1. Fork the repository
-2. Create a new branch
-3. Make your changes
-4. Submit a pull request
-
 ## Security Note 🔒
 
 - The application requires an OpenAI API key
@@ -120,7 +112,7 @@ OPENAI_API_KEY=your_api_key_here
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## Acknowledgments 🙏
+## Acknowledgments
 
 - Built with [Streamlit](https://streamlit.io/)
 - Powered by [OpenAI](https://openai.com/)
@@ -129,6 +121,3 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ---
 
-Made with ❤️ by [Your Name]
-
-For bug reports and feature requests, please [create an issue](https://github.com/yourusername/smart-csv-analyzer/issues).
