@@ -80,7 +80,6 @@ OPENAI_API_KEY=your_api_key_here
 
 - The application requires an OpenAI API key
 - API keys are stored only in session state and are not permanently saved
-- Use environment variables for API keys in production
 
 ## Limitations ⚠️
 
@@ -98,6 +97,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - Powered by [OpenAI](https://openai.com/)
 - Uses [Plotly](https://plotly.com/) for visualizations
 - Pandas for data manipulation
-
----
 
