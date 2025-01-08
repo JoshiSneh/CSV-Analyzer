@@ -48,7 +48,7 @@ openai
 
 2. Run the application:
 ```bash
-streamlit run app.py
+streamlit run app_streamlit_new.py
 ```
 
 ## Usage 💡
