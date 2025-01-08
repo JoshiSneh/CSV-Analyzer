@@ -30,18 +30,6 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-## Requirements 📋
-
-Create a `requirements.txt` file with the following dependencies:
-
-```
-streamlit
-pandas
-plotly
-python-dotenv
-openai
-```
-
 ## Setup ⚙️
 
 1. Get an OpenAI API key from [OpenAI Platform](https://platform.openai.com/account/api-keys)
