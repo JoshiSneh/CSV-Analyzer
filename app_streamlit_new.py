@@ -7,7 +7,7 @@ from openai import OpenAI
 import time
 
 st.set_page_config(
-    page_title="Smart CSV Analyzer",
+    page_title="CSV Analyzer",
     page_icon="📊",
     layout="centered"
 )
