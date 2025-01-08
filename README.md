@@ -62,14 +62,7 @@ streamlit run app.py
    - Analysis Planning
    - Execution
    - Summary and Insights
-
-### Example Questions 🤔
-
-- "Show me the trend of sales over time"
-- "What are the top 5 performing products?"
-- "Calculate the monthly growth rate"
-- "Analyze the correlation between price and quantity sold"
-
+   - 
 ## Application Structure 🏗️
 
 ```
