@@ -403,4 +403,3 @@ if uploaded_file:
 
     except Exception as e:
         st.error(f"❌ An error occurred: {str(e)}")
-        st.info("Invalid API-key or Invalid data format. Please try again.")
