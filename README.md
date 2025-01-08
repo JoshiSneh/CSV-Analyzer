@@ -2,6 +2,8 @@
 
 An intelligent CSV file analysis tool powered by OpenAI GPT models and Streamlit. Ask questions about your data in natural language and get instant insights, visualizations, and analysis.
 
+It can generate errors while running the python code
+
 ## Features 🌟
 
 - **Natural Language Queries**: Ask questions about your data in plain English
