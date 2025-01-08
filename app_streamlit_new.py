@@ -159,7 +159,7 @@ if uploaded_file:
                     ).format(df_str=df.head().to_markdown(), df_columns=', '.join(df.columns),df_types="\n".join([f"- **{col}**: {dtype}" for col, dtype in df.items()]),user_query=user_query)
                     
                     response = client.chat.completions.create(
-                        model="gpt-4o",
+                        model="gpt-4o-mini",
                         temperature=0,
                         top_p=0.1,
                         messages=[
