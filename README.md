@@ -74,9 +74,8 @@ streamlit run app.py
 
 ```
 smart-csv-analyzer/
-├── app.py              # Main application file
+├── app_streamlit_new.py # Main application file
 ├── requirements.txt    # Project dependencies
-├── .env.example       # Example environment variables
 └── README.md          # Documentation
 ```
 
