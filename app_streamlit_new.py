@@ -1,6 +1,7 @@
 import plotly.express as px
 import streamlit as st
 import pandas as pd
+import numpy as np
 import plotly.graph_objects as go
 import io
 from openai import OpenAI
@@ -9,7 +10,7 @@ import time
 st.set_page_config(
     page_title="CSV Analyzer",
     page_icon="📊",
-    layout="centered"
+    layout="wide"
 )
 
 if 'openai_api_key' not in st.session_state:
@@ -63,7 +64,7 @@ if 'execution_complete' not in st.session_state:
 if 'summary_complete' not in st.session_state:
     st.session_state.summary_complete = False
 
-st.title("🎯 Smart CSV Analyzer")
+st.title("🎯 CSV Analyzer")
 st.markdown("""
     Upload your CSV file, ask questions in natural language, and get instant insights!
     Perfect for quick data analysis and visualization.
@@ -106,8 +107,8 @@ if uploaded_file:
 
                     ### Input Context
                     - Available DataFrame: `df`
-                    - Columns: {df_columns}
                     - Query: {user_query}
+                    - Columns: {df_columns}
                     - DataFrame Preview: {df_str}
                     - Data Types: {df_types}
 
@@ -118,26 +119,33 @@ if uploaded_file:
                     - Focused on DataFrame operations
                     - Contributing to the final solution
                     - Building logically on previous steps
+                    - Donot generate task that can't be executed on the given dataframe and throw an error.
                     - At last, convert all the important operations into a dataframe and give the result
 
-                    2. Variable Management:
+                    2. Function Generation:
+                    - Interpret user queries and generate functions as needed to fulfill task requirements.
+                    - Handle all complex DataFrame operations based on the user's query.
+                    - For complex operations, create a separate function to perform the required tasks efficiently
+
+                    3. Variable Management:
                     - Store key intermediate results as DataFrame operations
                     - Use descriptive variable names related to their content
                     - Maintain data types appropriate for the analysis
 
-                    3. Visualization Requirements (if needed):
+                    4. Visualization Requirements (if needed):
                     - Use Plotly exclusively
                     - Store plot in variable 'fig' and if multiple plots are needed, then use suffix as `fig_`
                     - Specify exact chart type and columns
                     - Include all necessary parameters
 
-                    4. Final Output Structure:
+                    5. Final Output Structure:
                     - Create output_dict containing:
                     - Key should be descriptive of the result
                     - Visualization should be start with 'fig' if applicable
                     - Meaningful, case-sensitive keys describing contents
                     - Final result should be stored in a variable named `output_dict`
                     - Inlucde all relevant dataframes and visualizations in `output_dict`. Identify based on the user query and then provide the output.
+                    - If there are any important dataframes, like such dataframes which are important for the analysis, then include them as well in the output_dict. For example, final result dataframe, comparison dataframe etc.
                     - Keys of the final task `output_dict` should be a meaningful like "Number of Rows". Where each word starts with an uppercase letter and words are separated by a space.
                     - Make sure no repetitive data is present in the output_dict
 
@@ -154,12 +162,12 @@ if uploaded_file:
                     - Focus on DataFrame operations only.
                     - Always maintain the Keys formation in the `output_dict` as mentioned above. First word should start with uppercase with space separated words.
 
-                    **Provide only the task plan. Do not include any additional explanations or commentary or python code.**
+                    **Provide only the task plan. Do not include any additional explanations or commentary or python code or output or any other informations**
                     """
-                    ).format(df_str=df.head().to_markdown(), df_columns=', '.join(df.columns),df_types="\n".join([f"- **{col}**: {dtype}" for col, dtype in df.items()]),user_query=user_query)
+                    ).format(user_query=user_query,df_columns=', '.join(df.columns),df_str=df.head(2).to_markdown(),df_types="\n".join([f"- **{col}**: {dtype}" for col, dtype in df.items()]))
                     
                     response = client.chat.completions.create(
-                        model="gpt-4o-mini",
+                        model="gpt-4o",
                         temperature=0,
                         top_p=0.1,
                         messages=[
@@ -171,7 +179,8 @@ if uploaded_file:
                     time.sleep(1)
                     status.update(label="✅ Analysis plan generated!", state="complete")
                     st.code(response.choices[0].message.content)
-                    st.caption(f"Token usage: {response.usage.total_tokens}")
+                    st.caption(f"Task Planner Token usage: {response.usage.total_tokens}")
+                    st.caption(f"Cached Token: {response.usage.prompt_tokens_details.cached_tokens}")
                     
                     st.session_state.analysis_complete = True
 
@@ -198,9 +207,11 @@ if uploaded_file:
                         - {df_task_plan}
 
                         ### Context
-                        - DataFrame: `df`
-                        - Columns: {df_columns}
+                        - Available DataFrame: `df`
                         - Query: {user_query}
+                        - Columns: {df_columns}
+                        - DataFrame Preview: {df_str}
+                        - Data Types: {df_types}
 
                         ### Core Requirements
 
@@ -256,7 +267,7 @@ if uploaded_file:
                         Step-by-Step implementation of the task plan based on the `df_task_plan`.
                         #Task-1, #Task2... with proper task description
                         """
-                    ).format(df_columns=', '.join(df.columns),user_query=user_query,df_task_plan=response.choices[0].message.content)
+                    ).format(df_task_plan=response.choices[0].message.content,user_query=user_query,df_columns=', '.join(df.columns),df_str=df.head(5).to_markdown(),df_types="\n".join([f"- **{col}**: {dtype}" for col, dtype in df.items()]))
                         
                         response = client.chat.completions.create(
                             model="gpt-4o-mini",
@@ -275,17 +286,17 @@ if uploaded_file:
                         task = task.replace('`', '').replace("python", "").strip()
                         
                         st.code(task, language="python")
-                        st.caption(f"Token usage: {response.usage.total_tokens}")
-                        
+                        st.caption(f"Task Execution Token usage: {response.usage.total_tokens}")
+                        st.caption(f"Cached Token: {response.usage.prompt_tokens_details.cached_tokens}")
+
                         # Execute the code
-                        exec_globals = {"df": df, "pd": pd, "px": px, "io": io}
+                        exec_globals = {"df": df, "pd": pd, "px": px, "io": io, "np": np}
                         exec_locals = {}
                         exec(task, exec_globals, exec_locals)
                         
                         graph_visual = {}
 
                         if "output_dict" in exec_locals:
-                            
                             for key, value in exec_locals["output_dict"].items():
                                 if isinstance(value, pd.DataFrame):
                                         st.write(f"📈 {key}")
@@ -304,10 +315,10 @@ if uploaded_file:
                                     graph_visual[key] = value.to_json()
                                 else:
                                     graph_visual["fig"] = None
-                        
+
                         st.session_state.execution_complete = True
 
-            # Summary Generation Phase
+            #Summary Generation Phase
             if st.session_state.execution_complete:
                 with st.container():
                     with st.status("Generating insights...") as status:
@@ -391,14 +402,13 @@ if uploaded_file:
                             ]
                         )
 
-                        time.sleep(1)  # Simulate processing
+                        time.sleep(1)
                         status.update(label="✅ Insights generated!", state="complete")
                         
                         st.subheader("🎯 Key Insights")
                         st.markdown(response.choices[0].message.content)
-                        
-                        st.caption(f"Summary tokens: {response.usage.total_tokens}")
-                        
+                        st.caption(f"Summary Token usage: {response.usage.total_tokens}")
+                        st.caption(f"Cached Token: {response.usage.prompt_tokens_details.cached_tokens}")
                         st.session_state.summary_complete = True
 
     except Exception as e:
