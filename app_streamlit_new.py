@@ -119,6 +119,7 @@ if uploaded_file:
                     - Focused on DataFrame operations
                     - Contributing to the final solution
                     - Building logically on previous steps
+                    - Make sure to handle all edge cases and potential data issues gracefully. For example, missing values, incorrect data types etc.
                     - Donot generate task that can't be executed on the given dataframe and throw an error.
                     - At last, convert all the important operations into a dataframe and give the result
 
@@ -146,8 +147,7 @@ if uploaded_file:
                     - Final result should be stored in a variable named `output_dict`
                     - Inlucde all relevant dataframes and visualizations in `output_dict`. Identify based on the user query and then provide the output.
                     - If there are any important dataframes, like such dataframes which are important for the analysis, then include them as well in the output_dict. For example, final result dataframe, comparison dataframe etc.
-                    - Keys of the final task `output_dict` should be a meaningful like "Number of Rows". Where each word starts with an uppercase letter and words are separated by a space. For example, the final task should look like:
-                        - `Create an `output_dict` and include the `first_half_transactions` DataFrame with the key "First Half Year Transactions"`. This pattern should be followed while key formation in the `output_dict`.
+                    - Keys of the final task `output_dict` should be a meaningful like "Number of Rows". Where each word starts with an uppercase letter and words are separated by a space. For example, "Number of Rows" instead of "number_of_rows", "Max Value" instead of "max_value" etc.
                     - Make sure no repetitive data is present in the output_dict
 
                     ### Output Format
