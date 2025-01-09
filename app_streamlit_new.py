@@ -239,9 +239,12 @@ if uploaded_file:
                             - Avoid using matplotlib. For plotting, use Plotly exclusively.
                             - Handle data operations like filtering, grouping, and aggregations accurately.
                             - Use functions like pd.to_datetime() to convert columns when necessary.
+                            - Add checks or use np.divide with where or np.errstate to handle division by zero safely.
                             - When working with the string matching make sure that all the leading or trailing spaces are removed.
                             - When using lambda function make sure the code is correct and should not throw any errors.
+                            - Avoid overly complex lambda functions; use named functions for clarity if the logic is complex.
                             - If for a operation a extraction of part is required from a string value then handle that carefully.
+                            - For string extraction (e.g., using .str.extract()), ensure the regex pattern matches correctly and handles edge cases.
                             - Use multiple functions if required to achieve the desired result
                             - Always final output should be stored in a variable named `output_dict` with all the necessary information.
 
