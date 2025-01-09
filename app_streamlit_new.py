@@ -480,7 +480,7 @@ if uploaded_file:
                         time.sleep(1)
                         status.update(label="✅ Questions generated!", state="complete")
                         
-                        st.subheader("🎯 Follow-up Questions")
+                        st.subheader("🔍 Follow-up Questions")
                         st.markdown(response.choices[0].message.content)
                         st.caption(f"Questions Token usage: {response.usage.total_tokens}")
                         st.caption(f"Cached Token: {response.usage.prompt_tokens_details.cached_tokens}")
