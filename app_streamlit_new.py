@@ -88,7 +88,7 @@ if uploaded_file:
         st.subheader("🔍 Ask Questions About Your Data")
         user_query = st.text_input(
             "What would you like to know about your data?",
-            placeholder="Example: Show me the sales trend over time",
+            placeholder="Example: Show me the transactions by month",
             help="Ask questions in plain English - our AI will understand and analyze your data accordingly!"
         )
 
