@@ -239,6 +239,7 @@ if uploaded_file:
                             - Avoid using matplotlib. For plotting, use Plotly exclusively.
                             - Handle data operations like filtering, grouping, and aggregations accurately.
                             - Use functions like pd.to_datetime() to convert columns when necessary.
+                            - When working with the string matching make sure that all the leading or trailing spaces are removed.
                             - When using lambda function make sure the code is correct and should not throw any errors.
                             - If for a operation a extraction of part is required from a string value then handle that carefully.
                             - Use multiple functions if required to achieve the desired result
