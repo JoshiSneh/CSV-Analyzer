@@ -128,8 +128,9 @@ if uploaded_file:
                         - Building logically on previous steps
                         - Make sure to handle all edge cases and potential data issues gracefully. For example, missing values, incorrect data types etc.
                         - Donot generate task that can't be executed on the given dataframe and throw an error.
-                        - At last, convert all the important operations into a dataframe and give the result. Donot convert a final result dataframe in to a dictionary format.
-
+                        - At last, convert all the important operations into a dataframe and give the result.
+                        - If there is a final dataframe then to DONOT convert that to the dictionary format. Keep the dataframes as it is.
+                        
                         2. Function Generation:
                         - Interpret user queries and generate functions as needed to fulfill task requirements.
                         - Handle all complex DataFrame operations based on the user's query.
