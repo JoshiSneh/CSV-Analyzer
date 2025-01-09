@@ -80,7 +80,7 @@ if uploaded_file:
         with st.expander("🔍 Preview Your Data", expanded=True):
             col1, col2 = st.columns([2, 1])
             with col1:
-                st.dataframe(df.head(), use_container_width=True)
+                st.dataframe(df, use_container_width=True)
             with col2:
                 st.write("📊 Data Overview")
                 st.info(f"Rows: {df.shape[0]}\nColumns: {df.shape[1]}")
