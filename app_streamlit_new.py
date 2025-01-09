@@ -390,6 +390,9 @@ if uploaded_file:
 
                         ### Data Visualization
                         [Only if figure exists - visualization analysis] Other wise, remove this section. Donot include this section if no visualization is present. 
+
+                        ### Suggestions for Further Analysis
+                        [Bullet points of questions that can be asked on the data]
                         """
                         ).format(user_question=user_query,task=task,out_df=exec_locals["output_dict"],fig=str(graph_visual))
                         
