@@ -456,14 +456,11 @@ if uploaded_file:
 
                         ## Output Format
 
-                        1. [Precise question using available data]\
-                           - [Brief business context and value in bullet point]
+                        1. [Precise question using available data] - [Brief business context and value]
 
-                        2. [Precise question using available data]\
-                           - [Brief business context and value in bullet point]
+                        2. [Precise question using available data] - [Brief business context and value]
 
-                        3. [Precise question using available data]\
-                           - [Brief business context and value in bullet point]
+                        3. [Precise question using available data] - [Brief business context and value]
                         """
                         ).format(user_question=user_query,df_columns=', '.join(df.columns),df_head=df.head(1).to_markdown())
                         
