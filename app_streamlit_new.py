@@ -63,6 +63,8 @@ if 'execution_complete' not in st.session_state:
     st.session_state.execution_complete = False
 if 'summary_complete' not in st.session_state:
     st.session_state.summary_complete = False
+if 'question_complete' not in st.session_state:
+    st.session_state.question_complete = False
 
 st.title("🎯 CSV Analyzer")
 st.markdown("""
@@ -416,6 +418,77 @@ if uploaded_file:
                         st.caption(f"Summary Token usage: {response.usage.total_tokens}")
                         st.caption(f"Cached Token: {response.usage.prompt_tokens_details.cached_tokens}")
                         st.session_state.summary_complete = True
+
+            #Question Generation Phase
+            if st.session_state.summary_complete:
+                with st.container():
+                    with st.status("Generating Questions...") as status:
+                        follow_up_questions_prompt = (
+                        """
+                        # Follow-up Question Generator
+
+                        ## Role
+                        You are a precise data insight explorer who:
+                        - Generates follow-up questions based strictly on available data
+                        - Ensures questions are directly answerable using the dataset
+                        - Maintains focus on business value and actionable insights
+                        - Avoids assumptions or speculation beyond the data
+
+                        ## Input
+                        - Current Question: {user_question}
+                        - Available Columns: {df_columns}
+                        - Data Sample: {df_head}
+
+                        ## Core Requirements
+
+                        ### Question Generation Rules
+                        - Maximum 3 questions total
+                        - Questions must use only existing columns
+                        - Each question must be verifiable using the dataset
+                        - No questions requiring unavailable data
+                        - No hypothetical or speculative questions
+                        - Questions should provide new insights
+                        - Questions must be specific and actionable
+
+                        ### Quality Standards
+                        - Direct relationship to original analysis
+                        - Clear business value in each question
+                        - Explicit connection to available data
+                        - No redundancy with original question
+                        - Feasible to answer with given columns
+
+                        ## Output Format
+
+                        1. [Precise question using available data]\n
+                        Why it matters: [Brief business context and value]
+
+                        2. [Precise question using available data]\n
+                        Why it matters: [Brief business context and value]
+
+                        3. [Precise question using available data]\n
+                        Why it matters: [Brief business context and value]
+                        """
+                        ).format(user_question=user_query,df_columns=', '.join(df.columns),df_head=df.head(1).to_markdown())
+                        
+                        response = client.chat.completions.create(
+                            model="gpt-4o-mini",
+                            temperature=0.1,
+                            top_p=0.1,
+                            messages=[
+                                {"role": "system", "content": follow_up_questions_prompt},
+                                {"role": "user", "content": user_query}
+                            ]
+                        )
+
+                        time.sleep(1)
+                        status.update(label="✅ Questions generated!", state="complete")
+                        
+                        st.subheader("🎯 Follow-up Questions")
+                        st.markdown(response.choices[0].message.content)
+                        st.caption(f"Questions Token usage: {response.usage.total_tokens}")
+                        st.caption(f"Cached Token: {response.usage.prompt_tokens_details.cached_tokens}")
+                        st.session_state.question_complete = True
+                   
 
     except Exception as e:
         st.error(f"❌ An error occurred: {str(e)}")
