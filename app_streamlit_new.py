@@ -131,17 +131,12 @@ if uploaded_file:
                         - At last, convert all the important operations into a dataframe and give the result.
                         - If there is a final dataframe then to DONOT convert that to the dictionary format. Keep the dataframes as it is.
                         
-                        2. Function Generation:
-                        - Interpret user queries and generate functions as needed to fulfill task requirements.
-                        - Handle all complex DataFrame operations based on the user's query.
-                        - For complex operations, create a separate function to perform the required tasks efficiently
-
-                        3. Variable Management:
+                        2. Variable Management:
                         - Store key intermediate results as DataFrame operations
                         - Use descriptive variable names related to their content
                         - Maintain data types appropriate for the analysis
 
-                        4. Visualization Requirements (if needed):
+                        3. Visualization Requirements (if needed):
                         - Use Plotly exclusively
                         - Make sure to generate the visualization based on the user query and the previous task. Look for the previous steps and then generate the visualization accordingly.
                         - Never generate the task with wrong x and y axis. Always look for the previous steps and then generate the visualization accordingly. 
@@ -149,7 +144,7 @@ if uploaded_file:
                         - Specify exact chart type and columns
                         - Include all necessary parameters
 
-                        5. Final Output Structure:
+                        4. Final Output Structure:
                         - Create output_dict containing:
                         - Key should be descriptive of the result
                         - Visualization should be start with 'fig' if applicable
@@ -231,12 +226,15 @@ if uploaded_file:
                             - Intermediate results stored as pandas DataFrames
                             - Variables must have descriptive names reflecting their content
                             - All calculations must preserve data types specified in `df_types`
-                            
+                        
                             #### Instructions for Generating Python Code:
                             - Think step by step when generating the Python code based on the user query.
                             - Import all necessary libraries at the beginning of the code.
                             - Example: import pandas as pd, import plotly.express as px.
                             - Avoid using matplotlib. For plotting, use Plotly exclusively.
+                            - Interpret user queries and generate functions as needed to fulfill task requirements.
+                            - Handle all complex DataFrame operations based on the user's query.
+                            - For complex operations, create a separate function to perform the required tasks efficiently
                             - Handle data operations like filtering, grouping, and aggregations accurately.
                             - Use functions like pd.to_datetime() to convert columns when necessary.
                             - Add checks or use np.divide with where or np.errstate to handle division by zero safely.
