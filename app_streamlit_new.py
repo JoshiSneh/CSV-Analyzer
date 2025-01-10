@@ -287,7 +287,7 @@ if uploaded_file:
                         ).format(df_task_plan=response.choices[0].message.content,user_query=user_query,df_columns=', '.join(df.columns),df_str="\n".join([f"| {col} | {dtype} |" for col, dtype in df.items()]))
                             
                             response = client.chat.completions.create(
-                                model="gpt-4o-mini",
+                                model="gpt-4o",
                                 temperature=0,
                                 top_p=0.1,
                                 messages=[
