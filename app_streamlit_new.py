@@ -152,11 +152,9 @@ if uploaded_file:
                             - Create a final `output_dict` structured with:  
                             - **Descriptive keys** (e.g., "Number of Rows").  
                             - Visualization objects stored as variables prefixed with `fig_`.  
-                            - Relevant analysis DataFrames, clearly distinguished.  
-                            - Follow these **Key Formatting Rules**:  
-                                - Use spaces between words.  
-                                - Capitalize each word.  
-                                - Ensure descriptions accurately reflect content (e.g., "Maximum Value" instead of "max_val").  
+                            - Relevant analysis DataFrames, clearly distinguished.   
+                            - All the keys should be capitalize each word, use spaces between words. Ensure descriptions accurately reflect content (e.g., "Maximum Value" instead of "max_val").
+                            
                             ---
 
                             ## **Quality Standards**  
@@ -208,7 +206,7 @@ if uploaded_file:
                         ).format(user_query=user_query,df_columns=', '.join(df.columns),df_str="\n".join([f"| {col} | {dtype} |" for col, dtype in df.items()]))
                         
                         response = client.chat.completions.create(
-                            model="gpt-4o",
+                            model="gpt-4o-mini",
                             temperature=0,
                             top_p=0.1,
                             messages=[
