@@ -208,7 +208,7 @@ if uploaded_file:
                         ).format(user_query=user_query,df_columns=', '.join(df.columns),df_str="\n".join([f"| {col} | {dtype} |" for col, dtype in df.items()]))
                         
                         response = client.chat.completions.create(
-                            model="gpt-4o-mini",
+                            model="gpt-4o",
                             temperature=0,
                             top_p=0.1,
                             messages=[
@@ -318,7 +318,8 @@ if uploaded_file:
                             - Provide **Python code only** with no explanations or markdown.
                             - Implement each step from the task plan step-by-step donot miss anything.
                             - Use comments to separate **Task-1**, **Task-2**, etc., with brief task descriptions.
-                            - Store final output in **`output_dict`**.
+                            - Store final output in **`output_dict`** donot make it a list of dictionary.
+                            - Last and the final output should be of a **dictionary type**.
 
                             ---
 
@@ -361,7 +362,7 @@ if uploaded_file:
                         ).format(df_task_plan=response.choices[0].message.content,user_query=user_query,df_columns=', '.join(df.columns),df_str="\n".join([f"| {col} | {dtype} |" for col, dtype in df.items()]))
                             
                             response = client.chat.completions.create(
-                                model="gpt-4o",
+                                model="gpt-4o-mini",
                                 temperature=0,
                                 top_p=0.1,
                                 messages=[
