@@ -126,6 +126,7 @@ if uploaded_file:
                         - Focused on DataFrame operations
                         - Contributing to the final solution
                         - Building logically on previous steps
+                        - When doing the string extraction from the columns make sure to handle the case of the existance or not.
                         - Make sure to handle all edge cases and potential data issues gracefully. For example, missing values, incorrect data types etc.
                         - Donot generate task that can't be executed on the given dataframe and throw an error.
                         - At last, convert all the important operations into a dataframe and give the result.
@@ -245,6 +246,7 @@ if uploaded_file:
                             - Avoid overly complex lambda functions; use named functions for clarity if the logic is complex.
                             - If for a operation a extraction of part is required from a string value then handle that carefully.
                             - For string extraction (e.g., using .str.extract()), ensure the regex pattern matches correctly and handles edge cases.
+                            - Always validate data structure before unpacking to ensure operations like string splitting or regex extraction return the expected elements. Use checks or defaults to handle missing elements.
                             - Use multiple functions if required to achieve the desired result
                             - Always final output should be stored in a variable named `output_dict` with all the necessary information.
 
