@@ -232,7 +232,7 @@ if uploaded_file:
                             - Use functions like pd.to_datetime() to convert columns when necessary.
                             - Add checks or use np.divide with where or np.errstate to handle division by zero safely.
                             - Use .str.strip() to remove leading and trailing spaces before comparisons or transformations.
-                            - Avoid overly complex lambda functions; use named functions for clarity if the logic is complex.
+                            - Avoid overly complex lambda functions, use named functions a simple alternative of lambda functions for clarity.
                             - If for a operation a extraction of part is required from a string value then handle that carefully.
                             - For string extraction (e.g., using .str.extract()), ensure the regex pattern matches correctly and handles edge cases.
                             - Always validate data structure before unpacking to ensure operations like string splitting or regex extraction return the expected elements. Use checks or defaults to handle missing elements.
@@ -287,7 +287,7 @@ if uploaded_file:
                         ).format(df_task_plan=response.choices[0].message.content,user_query=user_query,df_columns=', '.join(df.columns),df_str="\n".join([f"| {col} | {dtype} |" for col, dtype in df.items()]))
                             
                             response = client.chat.completions.create(
-                                model="gpt-4o",
+                                model="gpt-4o-mini",
                                 temperature=0,
                                 top_p=0.1,
                                 messages=[
