@@ -255,7 +255,7 @@ if uploaded_file:
 
                             ### **1. Data Operations**
                             - Use **exact column names** from `df_columns` for all operations.
-                            - Store intermediate results as **pandas DataFrames**.
+                            - Intermediate results stored as pandas DataFrames
                             - Use **descriptive variable names** that reflect their content.
                             - Preserve data types as specified in `df_types`.
 
@@ -277,6 +277,7 @@ if uploaded_file:
                             - `import plotly.graph_objects as go`
                             - Avoid using deprecated pandas methods.
                             - Use consistent variable naming.
+                            - Donot use `fig.show()` during visualization. Just return the `fig`.
 
                             - **Error Handling**:
                             - Add checks for **data structure validation** before operations like unpacking or splitting.
@@ -363,7 +364,7 @@ if uploaded_file:
                         ).format(df_task_plan=response.choices[0].message.content,user_query=user_query,df_columns=', '.join(df.columns),df_str="\n".join([f"| {col} | {dtype} |" for col, dtype in df.items()]))
                             
                             response = client.chat.completions.create(
-                                model="gpt-4o-mini",
+                                model="gpt-4o",
                                 temperature=0,
                                 top_p=0.1,
                                 messages=[
