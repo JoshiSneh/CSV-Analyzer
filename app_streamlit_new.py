@@ -237,15 +237,14 @@ if uploaded_file:
                             - Think step by step when generating the Python code based on the user query.
                             - Import all necessary libraries at the beginning of the code.
                             - Example: import pandas as pd, import plotly.express as px.
+                            - Use zip(*...), for simplify the unpacking and avoid alignment issues during assignment.
+                            - Never ever use lambda function. Use named function for the complex logics.
                             - Check if each value in the column matches the expected format (e.g., datetime format or other expected patterns). Only perform operations (such as parsing or calculations) on values that match the required format, and skip or ignore any non-matching values to avoid errors.
                             - Avoid using matplotlib. For plotting, use Plotly exclusively.
                             - Interpret user queries and generate functions as needed to fulfill task requirements.
                             - Use functions like pd.to_datetime() to convert columns when necessary.
                             - Add checks or use np.divide with where or np.errstate to handle division by zero safely.
                             - Use .str.strip() to remove leading and trailing spaces before comparisons or transformations.
-                            - When using lambda function make sure the code is correct and should not throw any errors.
-                            - Use zip(*...), for simplify the unpacking and avoid alignment issues during assignment.
-                            - Use named functions for clarity if the logic is complex. DONOT USE LAMBDA FUNCTION.
                             - If for a operation a extraction of part is required from a string value then handle that carefully.
                             - For string extraction (e.g., using .str.extract()), ensure the regex pattern matches correctly and handles edge cases.
                             - Always validate data structure before unpacking to ensure operations like string splitting or regex extraction return the expected elements. Use checks or defaults to handle missing elements.
@@ -312,7 +311,7 @@ if uploaded_file:
 
                             # Execute the code
                             exec_globals = {"df": df, "pd": pd, "px": px, "io": io, "np": np}
-                            exec_locals = {}
+                            exec_locals = {"df": df, "pd": pd, "px": px, "io": io, "np": np}
                             exec(task, exec_globals, exec_locals)
                             
                             graph_visual = {}
