@@ -250,7 +250,20 @@ if uploaded_file:
                             Your responses will be **direct Python code implementations** without explanations. Focus purely on executing the provided task plan with optimal efficiency.  
                             
                             ---
+                            
+                            ## **Execution Plan**
+                            - `{df_task_plan}`
 
+                            ---
+
+                            ## **Context**
+                            - **Available DataFrame**: `df`
+                            - **Query**: `{user_query}`
+                            - **Available Columns**: `{df_columns}`
+                            - **DataFrame Preview with Column Types**: {df_str}
+                            
+                            ---
+                            
                             ## **Core Requirements**
 
                             ### **1. Data Operations**
@@ -345,20 +358,6 @@ if uploaded_file:
 
                             # Task-2: [Description]
                             [Code for Task-2]
-
-                            ---
-
-                            ## **Execution Plan**
-                            - `{df_task_plan}`
-
-                            ---
-
-                            ## **Context**
-                            - **Available DataFrame**: `df`
-                            - **Query**: `{user_query}`
-                            - **Available Columns**: `{df_columns}`
-                            - **DataFrame Preview with Column Types**: {df_str}
-
                             # ... Additional tasks as required
                             """
                         ).format(df_task_plan=response.choices[0].message.content,user_query=user_query,df_columns=', '.join(df.columns),df_str="\n".join([f"| {col} | {dtype} |" for col, dtype in df.items()]))
