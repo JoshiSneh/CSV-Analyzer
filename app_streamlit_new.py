@@ -232,7 +232,7 @@ if uploaded_file:
                             - Use functions like pd.to_datetime() to convert columns when necessary.
                             - Add checks or use np.divide with where or np.errstate to handle division by zero safely.
                             - Use .str.strip() to remove leading and trailing spaces before comparisons or transformations.
-                            - Avoid overly complex lambda functions, use named functions a simple alternative of lambda functions for clarity.
+                            - Avoid using `lambda` functions, use named functions as an alternative of `lambda` functions for better handling of the code.
                             - If for a operation a extraction of part is required from a string value then handle that carefully.
                             - For string extraction (e.g., using .str.extract()), ensure the regex pattern matches correctly and handles edge cases.
                             - Always validate data structure before unpacking to ensure operations like string splitting or regex extraction return the expected elements. Use checks or defaults to handle missing elements.
