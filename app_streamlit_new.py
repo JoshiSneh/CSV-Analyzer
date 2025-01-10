@@ -424,7 +424,7 @@ if uploaded_file:
                             ).format(user_question=user_query,task=task,out_df=exec_locals["output_dict"],fig=str(graph_visual))
                             
                             response = client.chat.completions.create(
-                                model="gpt-4o-mini",
+                                model="gpt-4o",
                                 temperature=0.1,
                                 top_p=0.1,
                                 messages=[
