@@ -209,17 +209,7 @@ if uploaded_file:
                             - Focus on accuracy and performance in all calculations
 
                             Your responses will be direct code implementations without explanations, focusing purely on executing the provided task plan with optimal efficiency.
-
-                            ### Execution Plan
-                            - {df_task_plan}
-
-                            ### Context
-                            - Available DataFrame: `df`
-                            - Query: {user_query}
-                            - Columns: {df_columns}
-                            - DataFrame Preview: {df_str}
-                            - Data Types: {df_types}
-
+                            
                             ### Core Requirements
 
                             #### Data Operations
@@ -235,6 +225,8 @@ if uploaded_file:
                             
                             #### Instructions for Generating Python Code:
                             - Think step by step when generating the Python code based on the user query.
+                            - Never use the `lambda` function. Use Named Function instead of that.
+                            - Use `zip(*...)`  simplify for the unpacking and this will avoid alignment issues during assignment.
                             - Import all necessary libraries at the beginning of the code.
                             - Example: import pandas as pd, import plotly.express as px.
                             - Check if each value in the column matches the expected format (e.g., datetime format or other expected patterns). Only perform operations (such as parsing or calculations) on values that match the required format, and skip or ignore any non-matching values to avoid errors.
@@ -243,7 +235,6 @@ if uploaded_file:
                             - Use functions like pd.to_datetime() to convert columns when necessary.
                             - Add checks or use np.divide with where or np.errstate to handle division by zero safely.
                             - Use .str.strip() to remove leading and trailing spaces before comparisons or transformations.
-                            - Avoid overly complex lambda functions; use named functions for clarity if the logic is complex.
                             - If for a operation a extraction of part is required from a string value then handle that carefully.
                             - For string extraction (e.g., using .str.extract()), ensure the regex pattern matches correctly and handles edge cases.
                             - Always validate data structure before unpacking to ensure operations like string splitting or regex extraction return the expected elements. Use checks or defaults to handle missing elements.
@@ -285,6 +276,19 @@ if uploaded_file:
                             [code implementing each task]
                             Step-by-Step implementation of the task plan based on the `df_task_plan`.
                             #Task-1, #Task2... with proper task description
+
+                            
+                            ### Execution Plan
+                            - {df_task_plan}
+
+                             ### Context
+                            - Available DataFrame: `df`
+                            - Query: {user_query}
+                            - Columns: {df_columns}
+                            - DataFrame Preview: {df_str}
+                            - Data Types: {df_types}
+
+                            **Provide only the Python Code which can be run with the `exec()`. Do not include any additional explanations or commentary**
                             """
                         ).format(df_task_plan=response.choices[0].message.content,user_query=user_query,df_columns=', '.join(df.columns),df_str=df.head(5).to_markdown(),df_types="\n".join([f"- **{col}**: {dtype}" for col, dtype in df.items()]))
                             
