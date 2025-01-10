@@ -217,6 +217,10 @@ if uploaded_file:
                             - Intermediate results stored as pandas DataFrames
                             - Variables must have descriptive names reflecting their content
                             - All calculations must preserve data types specified in `df_types`
+                            - Each operation follows task plan sequence
+                            - No deprecated pandas methods
+                            - Consistent variable naming
+                            - Type-aware operations
 
                             ### Function Generation:
                             - Handle all complex DataFrame operations based on the user's query
@@ -248,11 +252,6 @@ if uploaded_file:
                                 - import plotly.express as px
                                 - import plotly.graph_objects as go
                                 - import re
-
-                            - Each operation follows task plan sequence
-                            - No deprecated pandas methods
-                            - Consistent variable naming
-                            - Type-aware operations
 
                             #### Visualization Standards
                             - Use Plotly exclusively
