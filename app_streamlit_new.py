@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
 import io
+import re
 from openai import OpenAI
 import time
 
@@ -244,11 +245,13 @@ if uploaded_file:
                             - Always final output should be stored in a variable named `output_dict` with all the necessary information.
 
                             #### Code Standards
+                            Import all the required imports
                             Required imports:
                             - import pandas as pd
                             - import numpy as np
                             - import plotly.express as px
                             - import plotly.graph_objects as go
+                            - import re
 
                             - Each operation follows task plan sequence
                             - No deprecated pandas methods
@@ -310,7 +313,7 @@ if uploaded_file:
                             st.caption(f"Cached Token: {response.usage.prompt_tokens_details.cached_tokens}")
 
                             # Execute the code
-                            exec_globals = {"df": df, "pd": pd, "px": px, "io": io, "np": np}
+                            exec_globals = {"df": df, "pd": pd, "px": px, "io": io, "np": np,"re":re}
                             exec_locals = {}
                             exec(task, exec_globals, exec_locals)
                             
