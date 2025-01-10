@@ -3,7 +3,6 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
-import re
 import io
 from openai import OpenAI
 import time
@@ -113,6 +112,13 @@ if uploaded_file:
                         ### Task Planning System
                         You are a specialized task planning agent. Your role is to create precise, executable task plans for analyzing DataFrame 'df'.
 
+                        ### Input Context
+                        - Available DataFrame: `df`
+                        - Query: {user_query}
+                        - Columns: {df_columns}
+                        - DataFrame Preview: {df_str}
+                        - Data Types: {df_types}
+
                         ### Core Requirements
                         1. Each task must be:
                         - Specific and directly executable
@@ -147,19 +153,9 @@ if uploaded_file:
                         - Final result should be stored in a variable named `output_dict`
                         - Inlucde all relevant dataframes and visualizations in `output_dict`. Identify based on the user query and then provide the output.
                         - If there are any important dataframes, like such dataframes which are important for the analysis, then include them as well in the output_dict. For example, final result dataframe, comparison dataframe etc.
-                        - Key Formatting:
-                            1. All keys in the final output_dict dictionary should be meaningful and follow the specified format:
-                            2. Each word in the key should start with an uppercase letter.
-                            3. Words should be separated by a single space.
-                              - Examples:
-                                 1. Use "Number of Rows" instead of "number_of_rows".
-                                 2. Use "Max Value" instead of "max_value".
-                        - No Redundant Data:
-                           1. Ensure the output_dict does not contain any repetitive data. Only unique, relevant information should be included.
-                        - Final Task Summary:
-                           1. When completing the final task, include the list of all keys present in the dictionary.
-                           2. Mention explicitly that these keys should be used in the output_dict.
-                        
+                        - Keys of the final task `output_dict` should be a meaningful like "Number of Rows". Where each word starts with an uppercase letter and words are separated by a space. For example, "Number of Rows" instead of "number_of_rows", "Max Value" instead of "max_value" etc.
+                        - Make sure no repetitive data is present in the output_dict
+
                         ### Output Format
                         Task-1: [Precise action description]
                         Task-2: [Precise action description]
@@ -171,17 +167,11 @@ if uploaded_file:
                         - Clear progression toward solution
                         - Complete but concise descriptions
                         - Focus on DataFrame operations only.
-                        - Always maintain the Keys formation in the `output_dict` as mentioned above. First word should start with uppercase with space separated words. 
+                        - Always maintain the Keys formation in the `output_dict` as mentioned above. First word should start with uppercase with space separated words.
 
-                         ### Input Context
-                        - Available DataFrame: `df`
-                        - Query: {user_query}
-                        - Columns: {df_columns}
-                        - DataFrame Preview: {df_str}
-                        
                         **Provide only the task plan. Do not include any additional explanations or commentary or python code or output or any other informations**
                         """
-                        ).format(user_query=user_query,df_columns=', '.join(df.columns),df_str="\n".join([f"| {col} | {dtype} |" for col, dtype in df.items()]))
+                        ).format(user_query=user_query,df_columns=', '.join(df.columns),df_str=df.head(2).to_markdown(),df_types="\n".join([f"- **{col}**: {dtype}" for col, dtype in df.items()]))
                         
                         response = client.chat.completions.create(
                             model="gpt-4o",
@@ -209,7 +199,7 @@ if uploaded_file:
                             """
                             ### Task Execution System
 
-                            You are an expert data analysis assistant with deep expertise in writing python code, pandas, numpy, and data visualization. Your role is to:
+                            You are an expert data analysis assistant with deep expertise in pandas, numpy, and data visualization. Your role is to:
                             - Transform complex data analysis tasks into precise, executable Python code
                             - Ensure all operations maintain data integrity and type safety
                             - Follow best practices for DataFrame operations and memory efficiency
@@ -217,8 +207,6 @@ if uploaded_file:
                             - Generate production-ready code that adheres to Python standards
                             - Handle edge cases and potential data issues gracefully
                             - Focus on accuracy and performance in all calculations
-                            - You have to always write the Python Code that are executable with the `exec()` function.
-                            - You are capable enough to write the modular and correct Python Code.
 
                             Your responses will be direct code implementations without explanations, focusing purely on executing the provided task plan with optimal efficiency.
 
@@ -230,7 +218,8 @@ if uploaded_file:
                             - Query: {user_query}
                             - Columns: {df_columns}
                             - DataFrame Preview: {df_str}
-                            
+                            - Data Types: {df_types}
+
                             ### Core Requirements
 
                             #### Data Operations
@@ -238,10 +227,6 @@ if uploaded_file:
                             - Intermediate results stored as pandas DataFrames
                             - Variables must have descriptive names reflecting their content
                             - All calculations must preserve data types specified in `df_types`
-                            - Each operation follows task plan sequence
-                            - No deprecated pandas methods
-                            - Consistent variable naming
-                            - Type-aware operations
 
                             ### Function Generation:
                             - Handle all complex DataFrame operations based on the user's query
@@ -258,7 +243,8 @@ if uploaded_file:
                             - Use functions like pd.to_datetime() to convert columns when necessary.
                             - Add checks or use np.divide with where or np.errstate to handle division by zero safely.
                             - Use .str.strip() to remove leading and trailing spaces before comparisons or transformations.
-                            - Avoid using `lambda` functions, use named functions as an alternative of `lambda` functions for better handling of the code.
+                            - When using lambda function make sure the code is correct and should not throw any errors.
+                            - Avoid overly complex lambda functions; use named functions for clarity if the logic is complex.
                             - If for a operation a extraction of part is required from a string value then handle that carefully.
                             - For string extraction (e.g., using .str.extract()), ensure the regex pattern matches correctly and handles edge cases.
                             - Always validate data structure before unpacking to ensure operations like string splitting or regex extraction return the expected elements. Use checks or defaults to handle missing elements.
@@ -266,13 +252,16 @@ if uploaded_file:
                             - Always final output should be stored in a variable named `output_dict` with all the necessary information.
 
                             #### Code Standards
-                            - Imports all the neccessary imports that are required.
-                            - Some common imports are below:-
-                                - import pandas as pd
-                                - import numpy as np
-                                - import plotly.express as px
-                                - import plotly.graph_objects as go
-                                - import re
+                            Required imports:
+                            - import pandas as pd
+                            - import numpy as np
+                            - import plotly.express as px
+                            - import plotly.graph_objects as go
+
+                            - Each operation follows task plan sequence
+                            - No deprecated pandas methods
+                            - Consistent variable naming
+                            - Type-aware operations
 
                             #### Visualization Standards
                             - Use Plotly exclusively
@@ -298,10 +287,10 @@ if uploaded_file:
                             Step-by-Step implementation of the task plan based on the `df_task_plan`.
                             #Task-1, #Task2... with proper task description
                             """
-                        ).format(df_task_plan=response.choices[0].message.content,user_query=user_query,df_columns=', '.join(df.columns),df_str="\n".join([f"| {col} | {dtype} |" for col, dtype in df.items()]))
+                        ).format(df_task_plan=response.choices[0].message.content,user_query=user_query,df_columns=', '.join(df.columns),df_str=df.head(5).to_markdown(),df_types="\n".join([f"- **{col}**: {dtype}" for col, dtype in df.items()]))
                             
                             response = client.chat.completions.create(
-                                model="gpt-4o",
+                                model="gpt-4o-mini",
                                 temperature=0,
                                 top_p=0.1,
                                 messages=[
@@ -321,7 +310,7 @@ if uploaded_file:
                             st.caption(f"Cached Token: {response.usage.prompt_tokens_details.cached_tokens}")
 
                             # Execute the code
-                            exec_globals = {"df": df, "pd": pd, "px": px, "io": io, "np": np,"re":re,"go":go}
+                            exec_globals = {"df": df, "pd": pd, "px": px, "io": io, "np": np}
                             exec_locals = {}
                             exec(task, exec_globals, exec_locals)
                             
@@ -424,7 +413,7 @@ if uploaded_file:
                             ).format(user_question=user_query,task=task,out_df=exec_locals["output_dict"],fig=str(graph_visual))
                             
                             response = client.chat.completions.create(
-                                model="gpt-4o",
+                                model="gpt-4o-mini",
                                 temperature=0.1,
                                 top_p=0.1,
                                 messages=[
