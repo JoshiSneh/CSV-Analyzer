@@ -109,99 +109,66 @@ if uploaded_file:
                     with st.status("Generating analysis plan...") as status:
                         task_planner_prompt = (
                         """
-                            # Specialized Task Planning Agent for DataFrame Analysis  
+                        ### Task Planning System
+                        You are a specialized task planning agent. Your role is to create precise, executable task plans for analyzing DataFrame 'df'.
 
-                            ---
+                        ### Input Context
+                        - Available DataFrame: `df`
+                        - Query: {user_query}
+                        - Columns: {df_columns}
+                        - DataFrame Preview with column types: {df_str}
 
-                            ## **Core Role**  
-                            Your role is to **develop precise, structured, and executable task plans and sub-task plans** tailored for analyzing DataFrames, adhering to the outlined standards and requirements.  
+                        ### Core Requirements
+                        1. Each task must be:
+                        - Specific and directly executable
+                        - Based solely on available columns. Donot assume additional data or columns
+                        - Focused on DataFrame operations
+                        - Contributing to the final solution
+                        - Building logically on previous steps
+                        - When doing the string extraction from the columns make sure to handle the case of the existance or not.
+                        - Make sure to handle all edge cases and potential data issues gracefully. For example, missing values, incorrect data types etc.
+                        - Donot generate task that can't be executed on the given dataframe and throw an error.
+                        - At last, convert all the important operations into a dataframe and give the result.
+                        - If there is a final dataframe then to DONOT convert that to the dictionary format. Keep the dataframes as it is.
+                        
+                        2. Variable Management:
+                        - Store key intermediate results as DataFrame operations
+                        - Use descriptive variable names related to their content
+                        - Maintain data types appropriate for the analysis
 
-                            ---
+                        3. Visualization Requirements (if needed):
+                        - Use Plotly exclusively
+                        - Make sure to generate the visualization based on the user query and the previous task. Look for the previous steps and then generate the visualization accordingly.
+                        - Never generate the task with wrong x and y axis. Always look for the previous steps and then generate the visualization accordingly. 
+                        - Store plot in variable 'fig' and if multiple plots are needed, then use suffix as `fig_`
+                        - Specify exact chart type and columns
+                        - Include all necessary parameters
 
-                            ## **Core Capabilities**  
-                            You are a **specialized agent for task planning** with expertise in:  
-                            - Creating detailed and executable task structures.  
-                            - Addressing edge cases and ensuring error-free operations.  
-                            - Generating actionable insights while preserving data integrity and ensuring high-quality visualizations.  
+                        4. Final Output Structure:
+                        - Create output_dict containing:
+                        - Key should be descriptive of the result
+                        - Visualization should be start with 'fig' if applicable
+                        - Meaningful, case-sensitive keys describing contents
+                        - Final result should be stored in a variable named `output_dict`
+                        - Inlucde all relevant dataframes and visualizations in `output_dict`. Identify based on the user query and then provide the output.
+                        - If there are any important dataframes, like such dataframes which are important for the analysis, then include them as well in the output_dict. For example, final result dataframe, comparison dataframe etc.
+                        - Keys of the final task `output_dict` should be a meaningful like "Number of Rows". Where each word starts with an uppercase letter and words are separated by a space. For example, "Number of Rows" instead of "number_of_rows", "Max Value" instead of "max_value" etc.
+                        - Make sure no repetitive data is present in the output_dict
 
-                            ---
+                        ### Output Format
+                        Task-1: [Precise action description]
+                        Task-2: [Precise action description]
+                        [...]
 
-                            ## **Primary Requirements**  
+                        ### Quality Standards
+                        - No assumptions about unavailable data
+                        - No skipped or redundant steps
+                        - Clear progression toward solution
+                        - Complete but concise descriptions
+                        - Focus on DataFrame operations only.
+                        - Always maintain the Keys formation in the `output_dict` as mentioned above. First word should start with uppercase with space separated words.
 
-                            ### **1. Task Structuring**  
-                            - Define each task with specific, actionable steps.  
-                            - Break tasks into logical, detailed sub-tasks with a clear progression for it's Parent Task.  
-                            - Operate exclusively on available DataFrame columns and functionalities.  
-                            - Address edge cases (e.g., missing values, incorrect data types) comprehensively.  
-                            - Ensure all outputs maintain the **DataFrame format** unless explicitly requested as lists, in which case convert lists into dictionary formats.  
-                            - **Final DataFrame outputs must always remain in DataFrame format.**  
-
-                            ### **2. Data Handling Standards**  
-                            - Use descriptive variable names for clarity and traceability.  
-                            - Validate column operations against data types and handle missing or null values appropriately.  
-                            - Avoid runtime errors by implementing robust error handling.  
-                            - Maintain appropriate data types for all intermediate and final results.  
-
-                            ### **3. Visualization Requirements**  
-                            - Exclusively use **Plotly** for all visualizations.  
-                            - Validate column selections for axes and chart parameters based on available data.  
-                            - Store visualizations in variables prefixed with `fig_`.  
-                            - Ensure clarity and relevance in all charts and graphs.  
-
-                            ### **4. Output Structuring**  
-                            - Create a final `output_dict` structured with:  
-                            - **Descriptive keys** (e.g., "Number of Rows").  
-                            - Visualization objects stored as variables prefixed with `fig_`.  
-                            - Relevant analysis DataFrames, clearly distinguished.   
-                            - All the keys should be capitalize each word, use spaces between words. Ensure descriptions accurately reflect content (e.g., "Maximum Value" instead of "max_val").
-                            
-                            ---
-
-                            ## **Quality Standards**  
-
-                            ### **1. Data Integrity**  
-                            - Operate only on available columns and data.  
-                            - Avoid assumptions about schema or external data.  
-                            - Fully validate all operations for correctness.  
-
-                            ### **2. Process Quality**  
-                            - Avoid skipped or redundant steps.  
-                            - Maintain a clear, logical progression toward the solution.  
-                            - Focus exclusively on DataFrame operations for processing.  
-                            - Implement robust error handling for all stages.  
-
-                            ---
-
-                            ## **Style, Tone, and Audience**  
-
-                            - **Style:** Task Planner Expert.  
-                            - **Tone:** Professional, Technical.  
-                            - **Audience:** Data Analysts and Data Scientists.  
-
-                            ---
-
-                            ## **Output Structure and Format**  
-
-                            ### **Tasks and Sub-Tasks**  
-                            **Task-1:** [Precise action description]  
-                               - **Sub-Task-1.1:** [Detailed step of Task-1]  
-                               - **Sub-Task-1.2:** [Detailed step Of Task-1]  
-                            **Task-2:** [Precise action description]  
-                               - **Sub-Task-2.1:** [Detailed step of Task-2]  
-                               - **Sub-Task-2.2:** [Detailed step of Task-2]  
-                              [...]
-                            
-                            ## **Input Parameters**  
-
-                            - **Available DataFrame:** `df`  
-                            - **User Query:** `{user_query}`  
-                            - **Available Columns:** `{df_columns}`   
-                            - **Data Frame Preview with column types:** `{df_str}`  
-                            ---
-
-                            ### **Output Guidelines**  
-                            - Provide only the **task plan**—no code, outputs, or additional commentary or extra informations. 
-                            ---
+                        **Provide only the task plan. Do not include any additional explanations or commentary or python code or output or any other informations**
                         """
                         ).format(user_query=user_query,df_columns=', '.join(df.columns),df_str="\n".join([f"| {col} | {dtype} |" for col, dtype in df.items()]))
                         
@@ -249,7 +216,7 @@ if uploaded_file:
                             - Available DataFrame: `df`
                             - Query: {user_query}
                             - Columns: {df_columns}
-                            - Data Frame Preview with column types: {df_str}
+                            - DataFrame Preview with column types: {df_str}
 
                             ### Core Requirements
 
@@ -341,7 +308,7 @@ if uploaded_file:
                             st.caption(f"Cached Token: {response.usage.prompt_tokens_details.cached_tokens}")
 
                             # Execute the code
-                            exec_globals = {"df": df, "pd": pd, "px": px, "io": io, "np": np,"go":go}
+                            exec_globals = {"df": df, "pd": pd, "px": px, "io": io, "np": np}
                             exec_locals = {}
                             exec(task, exec_globals, exec_locals)
                             
@@ -388,8 +355,9 @@ if uploaded_file:
                             ### Input Materials
                             - User Query: {user_question}
                             - Analysis Code: {task}
-                            - Results Dictionary with or withour visualization `fig`: {out_df}
-                            
+                            - Results Dictionary: {out_df}
+                            - Visualization (if present): {fig}
+
                             ### Summary Structure
 
                             ### Content Requirements
@@ -440,7 +408,7 @@ if uploaded_file:
                             ### Data Visualization
                             [Only if figure exists - visualization analysis] Other wise, remove this section. Donot include this section if no visualization is present.
                             """
-                            ).format(user_question=user_query,task=task,out_df=exec_locals["output_dict"])
+                            ).format(user_question=user_query,task=task,out_df=exec_locals["output_dict"],fig=str(graph_visual))
                             
                             response = client.chat.completions.create(
                                 model="gpt-4o-mini",
