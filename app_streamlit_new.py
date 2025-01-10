@@ -239,7 +239,7 @@ if uploaded_file:
                             - Import all necessary libraries at the beginning of the code.
                             - Example: import pandas as pd, import plotly.express as px.
                             - Use zip(*...), for simplify the unpacking and avoid alignment issues during assignment.
-                            - Never ever use `lambda x`. Use named function for the complex logics in place of `lambda x`.
+                            - When using .apply() function never use `lambda` inside that. Always use `Named` function
                             - Check if each value in the column matches the expected format (e.g., datetime format or other expected patterns). Only perform operations (such as parsing or calculations) on values that match the required format, and skip or ignore any non-matching values to avoid errors.
                             - Avoid using matplotlib. For plotting, use Plotly exclusively.
                             - Interpret user queries and generate functions as needed to fulfill task requirements.
