@@ -186,13 +186,14 @@ if uploaded_file:
                             ## **Output Structure and Format**  
 
                             ### **Tasks and Sub-Tasks**  
-                            - **Task-1:** [Precise action description]  
-                            - **Sub-Task-1.1:** [Detailed step of Task-1]  
-                            - **Sub-Task-1.2:** [Detailed step Of Task-1]  
-                            - **Task-2:** [Precise action description]  
-                            - **Sub-Task-2.1:** [Detailed step of Task-2]  
-                            - **Sub-Task-2.2:** [Detailed step of Task-2]  
-
+                            **Task-1:** [Precise action description]  
+                               - **Sub-Task-1.1:** [Detailed step of Task-1]  
+                               - **Sub-Task-1.2:** [Detailed step Of Task-1]  
+                            **Task-2:** [Precise action description]  
+                               - **Sub-Task-2.1:** [Detailed step of Task-2]  
+                               - **Sub-Task-2.2:** [Detailed step of Task-2]  
+                              [...]
+                            
                             ## **Input Parameters**  
 
                             - **Available DataFrame:** `df`  
