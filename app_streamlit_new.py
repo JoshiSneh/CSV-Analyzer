@@ -237,6 +237,7 @@ if uploaded_file:
                             - Think step by step when generating the Python code based on the user query.
                             - Import all necessary libraries at the beginning of the code.
                             - Example: import pandas as pd, import plotly.express as px.
+                            - Check if each value in the column matches the expected format (e.g., datetime format or other expected patterns). Only perform operations (such as parsing or calculations) on values that match the required format, and skip or ignore any non-matching values to avoid errors.
                             - Avoid using matplotlib. For plotting, use Plotly exclusively.
                             - Interpret user queries and generate functions as needed to fulfill task requirements.
                             - Use functions like pd.to_datetime() to convert columns when necessary.
