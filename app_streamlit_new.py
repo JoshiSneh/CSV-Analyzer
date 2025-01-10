@@ -202,7 +202,7 @@ if uploaded_file:
                             ---
 
                             ### **Output Guidelines**  
-                            - Provide only the **task plan**—no code, outputs, or additional commentary.  
+                            - Provide only the **task plan**—no code, outputs, or additional commentary or extra informations. 
                             ---
                         """
                         ).format(user_query=user_query,df_columns=', '.join(df.columns),df_str="\n".join([f"| {col} | {dtype} |" for col, dtype in df.items()]))
@@ -429,9 +429,8 @@ if uploaded_file:
                             ### Input Materials
                             - User Query: {user_question}
                             - Analysis Code: {task}
-                            - Results Dictionary: {out_df}
-                            - Visualization (if present): {fig}
-
+                            - Results Dictionary with or withour visualization `fig`: {out_df}
+                            
                             ### Summary Structure
 
                             ### Content Requirements
@@ -482,7 +481,7 @@ if uploaded_file:
                             ### Data Visualization
                             [Only if figure exists - visualization analysis] Other wise, remove this section. Donot include this section if no visualization is present.
                             """
-                            ).format(user_question=user_query,task=task,out_df=exec_locals["output_dict"],fig=str(graph_visual))
+                            ).format(user_question=user_query,task=task,out_df=exec_locals["output_dict"])
                             
                             response = client.chat.completions.create(
                                 model="gpt-4o-mini",
