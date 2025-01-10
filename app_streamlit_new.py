@@ -112,12 +112,6 @@ if uploaded_file:
                         ### Task Planning System
                         You are a specialized task planning agent. Your role is to create precise, executable task plans for analyzing DataFrame 'df'.
 
-                        ### Input Context
-                        - Available DataFrame: `df`
-                        - Query: {user_query}
-                        - Columns: {df_columns}
-                        - DataFrame Preview with column types: {df_str}
-
                         ### Core Requirements
                         1. Each task must be:
                         - Specific and directly executable
@@ -168,6 +162,12 @@ if uploaded_file:
                         - Focus on DataFrame operations only.
                         - Always maintain the Keys formation in the `output_dict` as mentioned above. First word should start with uppercase with space separated words.
 
+                         ### Input Context
+                        - Available DataFrame: `df`
+                        - Query: {user_query}
+                        - Columns: {df_columns}
+                        - DataFrame Preview: {df_str}
+                        
                         **Provide only the task plan. Do not include any additional explanations or commentary or python code or output or any other informations**
                         """
                         ).format(user_query=user_query,df_columns=', '.join(df.columns),df_str="\n".join([f"| {col} | {dtype} |" for col, dtype in df.items()]))
@@ -208,15 +208,6 @@ if uploaded_file:
                             - Focus on accuracy and performance in all calculations
 
                             Your responses will be direct code implementations without explanations, focusing purely on executing the provided task plan with optimal efficiency.
-
-                            ### Execution Plan
-                            - {df_task_plan}
-
-                            ### Context
-                            - Available DataFrame: `df`
-                            - Query: {user_query}
-                            - Columns: {df_columns}
-                            - DataFrame Preview with column types: {df_str}
 
                             ### Core Requirements
 
@@ -284,6 +275,15 @@ if uploaded_file:
                             [code implementing each task]
                             Step-by-Step implementation of the task plan based on the `df_task_plan`.
                             #Task-1, #Task2... with proper task description
+
+                            ### Execution Plan
+                            - {df_task_plan}
+
+                            ### Context
+                            - Available DataFrame: `df`
+                            - Query: {user_query}
+                            - Columns: {df_columns}
+                            - DataFrame Preview: {df_str}
                             """
                         ).format(df_task_plan=response.choices[0].message.content,user_query=user_query,df_columns=', '.join(df.columns),df_str="\n".join([f"| {col} | {dtype} |" for col, dtype in df.items()]))
                             
