@@ -147,9 +147,19 @@ if uploaded_file:
                         - Final result should be stored in a variable named `output_dict`
                         - Inlucde all relevant dataframes and visualizations in `output_dict`. Identify based on the user query and then provide the output.
                         - If there are any important dataframes, like such dataframes which are important for the analysis, then include them as well in the output_dict. For example, final result dataframe, comparison dataframe etc.
-                        - Keys of the final task `output_dict` should be a meaningful like "Number of Rows". Where each word starts with an uppercase letter and words are separated by a space. 
-                        - Make sure no repetitive data is present in the output_dict
-
+                        - Key Formatting:
+                            1. All keys in the final output_dict dictionary should be meaningful and follow the specified format:
+                            2. Each word in the key should start with an uppercase letter.
+                            3. Words should be separated by a single space.
+                              - Examples:
+                                 1. Use "Number of Rows" instead of "number_of_rows".
+                                 2. Use "Max Value" instead of "max_value".
+                        - No Redundant Data:
+                           1. Ensure the output_dict does not contain any repetitive data. Only unique, relevant information should be included.
+                        - Final Task Summary:
+                           1. When completing the final task, include the list of all keys present in the dictionary.
+                           2. Mention explicitly that these keys should be used in the output_dict.
+                        
                         ### Output Format
                         Task-1: [Precise action description]
                         Task-2: [Precise action description]
@@ -161,7 +171,7 @@ if uploaded_file:
                         - Clear progression toward solution
                         - Complete but concise descriptions
                         - Focus on DataFrame operations only.
-                        - Always maintain the Keys formation in the `output_dict` as mentioned above. First word should start with uppercase with space separated words. For example, "Number of Rows" instead of "number_of_rows", "Max Value" instead of "max_value" etc.
+                        - Always maintain the Keys formation in the `output_dict` as mentioned above. First word should start with uppercase with space separated words. 
 
                          ### Input Context
                         - Available DataFrame: `df`
