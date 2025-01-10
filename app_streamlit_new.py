@@ -154,10 +154,9 @@ if uploaded_file:
                             - Visualization objects stored as variables prefixed with `fig_`.  
                             - Relevant analysis DataFrames, clearly distinguished.  
                             - Follow these **Key Formatting Rules**:  
-                            - Use spaces between words.  
-                            - Capitalize each word.  
-                            - Ensure descriptions accurately reflect content (e.g., "Maximum Value" instead of "max_val").  
-
+                                - Use spaces between words.  
+                                - Capitalize each word.  
+                                - Ensure descriptions accurately reflect content (e.g., "Maximum Value" instead of "max_val").  
                             ---
 
                             ## **Quality Standards**  
