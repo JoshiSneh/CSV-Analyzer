@@ -229,7 +229,7 @@ if uploaded_file:
                         with st.status("Executing analysis...") as status:
                             task_execution_prompt = (
                             """
-### Task                    ### Task Execution System
+                            ### Task Execution System
 
                             You are an expert data analysis assistant with deep expertise in pandas, numpy, and data visualization. Your role is to:
                             - Transform complex data analysis tasks into precise, executable Python code
@@ -341,7 +341,7 @@ if uploaded_file:
                             st.caption(f"Cached Token: {response.usage.prompt_tokens_details.cached_tokens}")
 
                             # Execute the code
-                            exec_globals = {"df": df, "pd": pd, "px": px, "io": io, "np": np}
+                            exec_globals = {"df": df, "pd": pd, "px": px, "io": io, "np": np,"go":go}
                             exec_locals = {}
                             exec(task, exec_globals, exec_locals)
                             
