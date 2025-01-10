@@ -353,7 +353,7 @@ if uploaded_file:
                             ## **Context**
                             - **Available DataFrame**: `df`
                             - **Query**: `{user_query}`
-                            - **Columns**: `{df_columns}`
+                            - **Available Columns**: `{df_columns}`
                             - **DataFrame Preview with Column Types**: {df_str}
 
                             # ... Additional tasks as required
