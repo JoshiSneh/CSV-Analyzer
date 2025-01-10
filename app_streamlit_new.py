@@ -226,16 +226,18 @@ if uploaded_file:
                             - Intermediate results stored as pandas DataFrames
                             - Variables must have descriptive names reflecting their content
                             - All calculations must preserve data types specified in `df_types`
-                        
+
+                            ### Function Generation:
+                            - Handle all complex DataFrame operations based on the user's query
+                            - For complex operations, create a separate function to perform the required tasks efficiently
+                            - Handle data operations like filtering, grouping, and aggregations accurately.
+                            
                             #### Instructions for Generating Python Code:
                             - Think step by step when generating the Python code based on the user query.
                             - Import all necessary libraries at the beginning of the code.
                             - Example: import pandas as pd, import plotly.express as px.
                             - Avoid using matplotlib. For plotting, use Plotly exclusively.
                             - Interpret user queries and generate functions as needed to fulfill task requirements.
-                            - Handle all complex DataFrame operations based on the user's query.
-                            - For complex operations, create a separate function to perform the required tasks efficiently
-                            - Handle data operations like filtering, grouping, and aggregations accurately.
                             - Use functions like pd.to_datetime() to convert columns when necessary.
                             - Add checks or use np.divide with where or np.errstate to handle division by zero safely.
                             - When working with the string matching make sure that all the leading or trailing spaces are removed.
