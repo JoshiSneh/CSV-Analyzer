@@ -110,7 +110,7 @@ if uploaded_file:
                         task_planner_prompt = (
                         """
                         ### Task Planning System
-                        You are a specialized task planning agent. Your role is to create precise, executable task plans for analyzing DataFrame 'df'.
+                        You are a specialized task planning agent. Your role is to create precise, executable schema based task plans for analyzing DataFrame 'df'.
 
                         ### Input Context
                         - Available DataFrame: `df`
@@ -121,7 +121,7 @@ if uploaded_file:
 
                         ### Core Requirements
                         1. Each task must be:
-                        - Specific and directly executable
+                        - Specific and directly executable with the `exec()` function of Python.
                         - Based solely on available columns. Donot assume additional data or columns
                         - Focused on DataFrame operations
                         - Contributing to the final solution
