@@ -244,8 +244,8 @@ if uploaded_file:
                             - Add checks or use np.divide with where or np.errstate to handle division by zero safely.
                             - Use .str.strip() to remove leading and trailing spaces before comparisons or transformations.
                             - When using lambda function make sure the code is correct and should not throw any errors.
-                            - While working lambda function name errors can occur. Make sure it's handle well.
-                            - Avoid overly complex lambda functions; use named functions for clarity if the logic is complex.
+                            - Use zip(*...), for simplify the unpacking and avoid alignment issues during assignment.
+                            - Use named functions for clarity if the logic is complex. DONOT USE LAMBDA FUNCTION.
                             - If for a operation a extraction of part is required from a string value then handle that carefully.
                             - For string extraction (e.g., using .str.extract()), ensure the regex pattern matches correctly and handles edge cases.
                             - Always validate data structure before unpacking to ensure operations like string splitting or regex extraction return the expected elements. Use checks or defaults to handle missing elements.
