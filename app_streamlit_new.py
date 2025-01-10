@@ -3,6 +3,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
+import re
 import io
 from openai import OpenAI
 import time
@@ -241,10 +242,13 @@ if uploaded_file:
 
                             #### Code Standards
                             Required imports:
-                            - import pandas as pd
-                            - import numpy as np
-                            - import plotly.express as px
-                            - import plotly.graph_objects as go
+                            - Imports all the neccessary imports that are required.
+                            - Some common imports are below:-
+                                - import pandas as pd
+                                - import numpy as np
+                                - import plotly.express as px
+                                - import plotly.graph_objects as go
+                                - import re
 
                             - Each operation follows task plan sequence
                             - No deprecated pandas methods
@@ -307,7 +311,7 @@ if uploaded_file:
                             st.caption(f"Cached Token: {response.usage.prompt_tokens_details.cached_tokens}")
 
                             # Execute the code
-                            exec_globals = {"df": df, "pd": pd, "px": px, "io": io, "np": np}
+                            exec_globals = {"df": df, "pd": pd, "px": px, "io": io, "np": np,"re":re,"go":go}
                             exec_locals = {}
                             exec(task, exec_globals, exec_locals)
                             
