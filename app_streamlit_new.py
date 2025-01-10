@@ -241,7 +241,6 @@ if uploaded_file:
                             - Always final output should be stored in a variable named `output_dict` with all the necessary information.
 
                             #### Code Standards
-                            Required imports:
                             - Imports all the neccessary imports that are required.
                             - Some common imports are below:-
                                 - import pandas as pd
