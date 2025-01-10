@@ -209,6 +209,9 @@ if uploaded_file:
                             - Focus on accuracy and performance in all calculations
 
                             Your responses will be direct code implementations without explanations, focusing purely on executing the provided task plan with optimal efficiency.
+
+                            ### Execution Plan
+                            - {df_task_plan}
                             
                             ### Core Requirements
 
@@ -276,10 +279,6 @@ if uploaded_file:
                             [code implementing each task]
                             Step-by-Step implementation of the task plan based on the `df_task_plan`.
                             #Task-1, #Task2... with proper task description
-
-                            
-                            ### Execution Plan
-                            - {df_task_plan}
 
                              ### Context
                             - Available DataFrame: `df`
