@@ -235,6 +235,7 @@ if uploaded_file:
                             
                             #### Instructions for Generating Python Code:
                             - Think step by step when generating the Python code based on the user query.
+                            - You need to generate Python code that is properly formatted and can be executed using Python's `exec()` function. If the code is not structured correctly or contains syntax errors, it may result in execution failures or errors when passed to `exec()`
                             - Import all necessary libraries at the beginning of the code.
                             - Example: import pandas as pd, import plotly.express as px.
                             - Use zip(*...), for simplify the unpacking and avoid alignment issues during assignment.
