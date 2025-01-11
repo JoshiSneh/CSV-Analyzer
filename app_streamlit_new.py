@@ -170,25 +170,25 @@ if uploaded_file:
                          1. Maintain a uniform format for all keys in the `output_dict` to ensure consistency throughout the dataset.
                          2. All keys must adhere to the format outlined above, with no exceptions.
 
-                        ### Output Format
-                        Task-1: [Precise action description]
-                        Task-2: [Precise action description]
-                        [...]
-
-                        ### Quality Standards
+                         ### Quality Standards
                         - No assumptions about unavailable data
                         - No skipped or redundant steps
                         - Clear progression toward solution
                         - Complete but concise descriptions
                         - Focus on DataFrame operations only.
                         - Always maintain the Keys formation in the `output_dict` as mentioned above. First word should start with uppercase with space separated words.
-
+                        
                         ### Input Context
                         - Available DataFrame: `df`
                         - User Query: {user_query}
                         - Available Columns: {df_columns}
                         - Datatypes: {df_types}
                         - Dataframe Preview: {df_str}
+                        
+                        ### Output Format
+                        Task-1: [Precise action description]
+                        Task-2: [Precise action description]
+                        [...]
                         
                         **Provide only the task plan. Do not include any additional explanations or commentary or python code or output or any other informations**
                         """
