@@ -113,13 +113,6 @@ if uploaded_file:
                         ### Task Planning System
                         You are a specialized task planning agent. Your role is to create precise, executable schema based task plans for analyzing DataFrame 'df'.
 
-                        ### Input Context
-                        - Available DataFrame: `df`
-                        - User Query: {user_query}
-                        - Available Columns: {df_columns}
-                        - Datatypes: {df_types}
-                        - Dataframe Preview: {df_str}
-
                         ### Core Requirements
                         1. Each task must be:
                         - Specific and directly executable with the `exec()` function of Python.
@@ -154,8 +147,12 @@ if uploaded_file:
                         - Final result should be stored in a variable named `output_dict`
                         - Inlucde all relevant dataframes and visualizations in `output_dict`. Identify based on the user query and then provide the output.
                         - If there are any important dataframes, like such dataframes which are important for the analysis, then include them as well in the output_dict. For example, final result dataframe, comparison dataframe etc.
-                        - Keys of the final task `output_dict` should be a meaningful like "Number of Rows". Where each word starts with an uppercase letter and words are separated by a space. For example, "Number of Rows" instead of "number_of_rows", "Max Value" instead of "max_value" etc.
-                        - Make sure no repetitive data is present in the output_dict
+
+                        5. Keys Formation for `output_dict`:
+                        - Keys of the final task `output_dict` should be a meaningful like "Number of Rows".
+                        - Each key should starts with an uppercase letter and words are separated by a space. For example, "Number of Rows" instead of "number_of_rows", "Number of June Transactions" instead of "number_of_june_transactions" etc.
+                        - Make sure no repetitive data is present in the output_dict.
+                        - There should be consistency in the Keys formation. Make sure the format is in the required format.
 
                         ### Output Format
                         Task-1: [Precise action description]
@@ -169,6 +166,13 @@ if uploaded_file:
                         - Complete but concise descriptions
                         - Focus on DataFrame operations only.
                         - Always maintain the Keys formation in the `output_dict` as mentioned above. First word should start with uppercase with space separated words.
+
+                        ### Input Context
+                        - Available DataFrame: `df`
+                        - User Query: {user_query}
+                        - Available Columns: {df_columns}
+                        - Datatypes: {df_types}
+                        - Dataframe Preview: {df_str}
                         
                         **Provide only the task plan. Do not include any additional explanations or commentary or python code or output or any other informations**
                         """
