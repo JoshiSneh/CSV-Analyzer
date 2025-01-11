@@ -148,11 +148,27 @@ if uploaded_file:
                         - Inlucde all relevant dataframes and visualizations in `output_dict`. Identify based on the user query and then provide the output.
                         - If there are any important dataframes, like such dataframes which are important for the analysis, then include them as well in the output_dict. For example, final result dataframe, comparison dataframe etc.
 
-                        5. Keys Formation for `output_dict`:
-                        - Keys of the final task `output_dict` should be a meaningful like "Number of Rows".
-                        - Each key should starts with an uppercase letter and words are separated by a space. For example, "Number of Rows" instead of "number_of_rows", "Number of June Transactions" instead of "number_of_june_transactions" etc.
-                        - Make sure no repetitive data is present in the output_dict.
-                        - There should be consistency in the Keys formation. Make sure the format is in the required format.
+                        5. Keys Formation in output_dict:
+
+                        - Meaningful and Descriptive Keys:
+                         1. Ensure the keys in the output_dict are meaningful and provide clear information about the data they represent.
+                         2. Example: Use "Number of Rows" instead of "number_of_rows" or "NumRows."
+                        
+                        - Formatting Style:
+                        
+                         1. Keys should start with an uppercase letter.
+                         2. Words within the keys should be separated by a single space.
+                         Examples:
+                           - Use "Number of Rows" instead of "number_of_rows."
+                           - Use "Number of June Transactions" instead of "number_of_june_transactions."
+                        
+                        - Avoid Repetition:
+                         1. Ensure that no repetitive or redundant data is present within the output_dict.
+                         2. Example: Avoid having two keys like "Number of Rows" and "Total Rows" if they provide the same information.
+                        
+                        - Consistency in Formatting:
+                         1. Maintain a uniform format for all keys in the `output_dict` to ensure consistency throughout the dataset.
+                         2. All keys must adhere to the format outlined above, with no exceptions.
 
                         ### Output Format
                         Task-1: [Precise action description]
