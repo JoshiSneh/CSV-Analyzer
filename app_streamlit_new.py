@@ -113,6 +113,13 @@ if uploaded_file:
                         ### Task Planning System
                         You are a specialized task planning agent. Your role is to create precise, executable schema based task plans for analyzing DataFrame 'df'.
 
+                        ### Input Context
+                        - Available DataFrame: `df`
+                        - User Query: {user_query}
+                        - Available Columns: {df_columns}
+                        - Datatypes: {df_types}
+                        - Dataframe Preview: {df_str}
+
                         ### Core Requirements
                         1. Each task must be:
                         - Specific and directly executable with the `exec()` function of Python.
@@ -162,13 +169,6 @@ if uploaded_file:
                         - Complete but concise descriptions
                         - Focus on DataFrame operations only.
                         - Always maintain the Keys formation in the `output_dict` as mentioned above. First word should start with uppercase with space separated words.
-
-                        ### Input Context
-                        - Available DataFrame: `df`
-                        - User Query: {user_query}
-                        - Available Columns: {df_columns}
-                        - Datatypes: {df_types}
-                        - Dataframe Preview: {df_str}
                         
                         **Provide only the task plan. Do not include any additional explanations or commentary or python code or output or any other informations**
                         """
