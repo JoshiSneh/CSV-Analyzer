@@ -125,6 +125,7 @@ if uploaded_file:
                         - Donot generate task that can't be executed on the given dataframe and throw an error.
                         - At last, convert all the important operations into a dataframe and give the result.
                         - If there is a final dataframe then to DONOT convert that to the dictionary format. Keep the dataframes as it is.
+                        - Mention all the Keys required in the required format for the final result with the last task.
                         
                         2. Variable Management:
                         - Store key intermediate results as DataFrame operations
@@ -145,7 +146,7 @@ if uploaded_file:
                         - Visualization should be start with 'fig' if applicable
                         - Meaningful, case-sensitive keys describing contents
                         - Final result should be stored in a variable named `output_dict`
-                        - Inlucde all relevant dataframes and visualizations in `output_dict`. Identify based on the user query and then provide the output.
+                        - Include all relevant dataframes and visualizations in `output_dict`. Identify based on the user query and then provide the output.
                         - If there are any important dataframes, like such dataframes which are important for the analysis, then include them as well in the output_dict. For example, final result dataframe, comparison dataframe etc.
 
                          ### Quality Standards
