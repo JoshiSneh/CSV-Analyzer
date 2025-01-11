@@ -216,10 +216,6 @@ if uploaded_file:
                             - Intermediate results stored as pandas DataFrames
                             - Variables must have descriptive names reflecting their content
                             - All calculations must preserve data types specified in `df_types`
-
-                            ### Function Generation:
-                            - For complex operations (like Regex), create a separate function to perform the required tasks efficiently.
-                            - Never ever use the lambda inside .apply() method. Use Named Function instead of that as lambda makes the code complex. Example: .apply(func(x)) use Named function like this. 
                             
                             #### Instructions for Generating Python Code:
                             - Think step by step when generating the Python code based on the user query
