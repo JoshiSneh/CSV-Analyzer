@@ -219,7 +219,7 @@ if uploaded_file:
 
                             ### Function Generation:
                             - For complex operations (like Regex), create a separate function to perform the required tasks efficiently.
-                            - Never use the lambda function. Use Named Function instead of that when working with .apply() function.
+                            - Never ever use the lambda inside .apply() method. Use Named Function instead of that as lambda makes the code complex. Example: .apply(func(x)) use Named function like this. 
                             
                             #### Instructions for Generating Python Code:
                             - Think step by step when generating the Python code based on the user query
