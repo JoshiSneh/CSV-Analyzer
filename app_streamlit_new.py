@@ -207,6 +207,7 @@ if uploaded_file:
                             - Generate production-ready code that adheres to Python standards
                             - Handle edge cases and potential data issues gracefully
                             - Focus on accuracy and performance in all calculations
+                            - Handle data operations like filtering, grouping, and aggregations accurately.
                             
                             ### Core Requirements
 
@@ -217,10 +218,8 @@ if uploaded_file:
                             - All calculations must preserve data types specified in `df_types`
 
                             ### Function Generation:
-                            - Handle all complex DataFrame operations based on the user's query
-                            - For complex operations, create a separate function to perform the required tasks efficiently
-                            - Handle data operations like filtering, grouping, and aggregations accurately.
-                            - Never use the lambda function. Use Named Function instead of that when working with functions.
+                            - For complex operations (like Regex), create a separate function to perform the required tasks efficiently.
+                            - Never use the lambda function. Use Named Function instead of that when working with .apply() function.
                             
                             #### Instructions for Generating Python Code:
                             - Think step by step when generating the Python code based on the user query
