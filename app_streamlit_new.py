@@ -220,11 +220,11 @@ if uploaded_file:
                             - Handle all complex DataFrame operations based on the user's query
                             - For complex operations, create a separate function to perform the required tasks efficiently
                             - Handle data operations like filtering, grouping, and aggregations accurately.
+                            - Never use the lambda function. Use Named Function instead of that when working with functions.
                             
                             #### Instructions for Generating Python Code:
-                            - Think step by step when generating the Python code based on the user query.
-                            - Never use the `lambda` function. Use Named Function instead of that.
-                            - Use `zip(*...)`  simplify for the unpacking and this will avoid alignment issues during assignment.
+                            - Think step by step when generating the Python code based on the user query
+                            - Use zip(*...)  simplify for the unpacking and this will avoid alignment issues during assignment.
                             - Import all necessary libraries at the beginning of the code.
                             - Example: import pandas as pd, import plotly.express as px.
                             - Check if each value in the column matches the expected format (e.g., datetime format or other expected patterns). Only perform operations (such as parsing or calculations) on values that match the required format, and skip or ignore any non-matching values to avoid errors.
