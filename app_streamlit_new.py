@@ -341,6 +341,7 @@ if uploaded_file:
                                         graph_visual[key] = value.to_json()
                                     else:
                                         graph_visual["fig"] = None
+                            print(exec_locals["output_locals"])
 
                             st.session_state.execution_complete = True
 
