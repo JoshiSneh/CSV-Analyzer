@@ -148,28 +148,6 @@ if uploaded_file:
                         - Inlucde all relevant dataframes and visualizations in `output_dict`. Identify based on the user query and then provide the output.
                         - If there are any important dataframes, like such dataframes which are important for the analysis, then include them as well in the output_dict. For example, final result dataframe, comparison dataframe etc.
 
-                        5. Keys Formation in output_dict:
-
-                        - Meaningful and Descriptive Keys:
-                         1. Ensure the keys in the output_dict are meaningful and provide clear information about the data they represent.
-                         2. Example: Use "Number of Rows" instead of "number_of_rows" or "NumRows."
-                        
-                        - Formatting Style:
-                        
-                         1. Keys should start with an uppercase letter.
-                         2. Words within the keys should be separated by a single space.
-                         Examples:
-                           - Use "Number of Rows" instead of "number_of_rows."
-                           - Use "Number of June Transactions" instead of "number_of_june_transactions."
-                        
-                        - Avoid Repetition:
-                         1. Ensure that no repetitive or redundant data is present within the output_dict.
-                         2. Example: Avoid having two keys like "Number of Rows" and "Total Rows" if they provide the same information.
-                        
-                        - Consistency in Formatting:
-                         1. Maintain a uniform format for all keys in the `output_dict` to ensure consistency throughout the dataset.
-                         2. All keys must adhere to the format outlined above, with no exceptions.
-
                          ### Quality Standards
                         - No assumptions about unavailable data
                         - No skipped or redundant steps
@@ -195,7 +173,7 @@ if uploaded_file:
                         ).format(user_query=user_query,df_columns=', '.join(df.columns),df_types="\n".join([f"- **{col}**: {dtype}" for col, dtype in df.items()]),df_str=df.head(2).to_markdown())
                         
                         response = client.chat.completions.create(
-                            model="gpt-4o-mini",
+                            model="gpt-4o",
                             temperature=0,
                             top_p=0.1,
                             messages=[
