@@ -113,12 +113,6 @@ if uploaded_file:
                         ### Task Planning System
                         You are a specialized task planning agent. Your role is to create precise, executable schema based task plans for analyzing DataFrame 'df'.
 
-                        ### Input Context
-                        - Available DataFrame: `df`
-                        - User Query: {user_query}
-                        - Available Columns: {df_columns}
-                        - DataFrame Preview: {df_str}
-
                         ### Core Requirements
                         1. Each task must be:
                         - Specific and directly executable with the `exec()` function of Python.
@@ -168,10 +162,17 @@ if uploaded_file:
                         - Complete but concise descriptions
                         - Focus on DataFrame operations only.
                         - Always maintain the Keys formation in the `output_dict` as mentioned above. First word should start with uppercase with space separated words.
+
+                        ### Input Context
+                        - Available DataFrame: `df`
+                        - User Query: {user_query}
+                        - Available Columns: {df_columns}
+                        - Datatypes: {df_types}
+                        - Dataframe Preview: {df_str}
                         
                         **Provide only the task plan. Do not include any additional explanations or commentary or python code or output or any other informations**
                         """
-                        ).format(user_query=user_query,df_columns=', '.join(df.columns),df_str="\n".join([f"- **{col}**: {dtype}" for col, dtype in df.items()]))
+                        ).format(user_query=user_query,df_columns=', '.join(df.columns),df_types="\n".join([f"- **{col}**: {dtype}" for col, dtype in df.items()]),df_str=df.head(2).to_markdown())
                         
                         response = client.chat.completions.create(
                             model="gpt-4o",
@@ -207,11 +208,6 @@ if uploaded_file:
                             - Generate production-ready code that adheres to Python standards
                             - Handle edge cases and potential data issues gracefully
                             - Focus on accuracy and performance in all calculations
-
-                            Your responses will be direct code implementations without explanations, focusing purely on executing the provided task plan with optimal efficiency.
-
-                            ### Execution Plan
-                            - {df_task_plan}
                             
                             ### Core Requirements
 
@@ -282,15 +278,21 @@ if uploaded_file:
                             Step-by-Step implementation of the task plan based on the `df_task_plan`.
                             #Task-1, #Task2... with proper task description
 
-                             ### Context
+                            ### Context
                             - Available DataFrame: `df`
                             - User Query: {user_query}
                             - Available Columns: {df_columns}
-                            - DataFrame Preview: {df_str}
+                            - Datatypes: {df_types}
+                            - Dataframe Preview: {df_str}
 
+                            Your responses will be direct code implementations without explanations, focusing purely on executing the provided task plan with optimal efficiency.
+
+                            ### Execution Plan
+                            - {df_task_plan}
+                            
                             **Provide only the Python Code which can be run with the `exec()`. Do not include any additional explanations or commentary**
                             """
-                        ).format(df_task_plan=response.choices[0].message.content,user_query=user_query,df_columns=', '.join(df.columns),df_str="\n".join([f"- **{col}**: {dtype}" for col, dtype in df.items()]))
+                        ).format(df_task_plan=response.choices[0].message.content,user_query=user_query,df_columns=', '.join(df.columns),df_types="\n".join([f"- **{col}**: {dtype}" for col, dtype in df.items()]),df_str=df.head(2).to_markdown())
                             
                             response = client.chat.completions.create(
                                 model="gpt-4o-mini",
