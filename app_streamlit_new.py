@@ -278,21 +278,28 @@ if uploaded_file:
                             Step-by-Step implementation of the task plan based on the `df_task_plan`.
                             #Task-1, #Task2... with proper task description
 
+                            ---
+                            
+                            Your responses will be direct code implementations without explanations, focusing purely on executing the provided task plan with optimal efficiency.
+
+                            ### Execution Plan
+                            - {df_task_plan}
+
+                            
+                            ---
+                            
                             ### Context
                             - Available DataFrame: `df`
                             - User Query: {user_query}
                             - Available Columns: {df_columns}
                             - Datatypes: {df_types}
                             - Dataframe Preview: {df_str}
-
-                            Your responses will be direct code implementations without explanations, focusing purely on executing the provided task plan with optimal efficiency.
-
-                            ### Execution Plan
-                            - {df_task_plan}
+                            
+                            ---
                             
                             **Provide only the Python Code which can be run with the `exec()`. Do not include any additional explanations or commentary**
                             """
-                        ).format(user_query=user_query,df_columns=', '.join(df.columns),df_types="\n".join([f"- **{col}**: {dtype}" for col, dtype in df.items()]),df_str=df.head(2).to_markdown(),df_task_plan=response.choices[0].message.content)
+                        ).format(df_task_plan=response.choices[0].message.content,user_query=user_query,df_columns=', '.join(df.columns),df_types="\n".join([f"- **{col}**: {dtype}" for col, dtype in df.items()]),df_str=df.head(2).to_markdown())
                             
                             response = client.chat.completions.create(
                                 model="gpt-4o-mini",
