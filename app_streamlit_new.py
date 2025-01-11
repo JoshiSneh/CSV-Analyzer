@@ -292,7 +292,7 @@ if uploaded_file:
                             
                             **Provide only the Python Code which can be run with the `exec()`. Do not include any additional explanations or commentary**
                             """
-                        ).format(df_task_plan=response.choices[0].message.content,user_query=user_query,df_columns=', '.join(df.columns),df_types="\n".join([f"- **{col}**: {dtype}" for col, dtype in df.items()]),df_str=df.head(2).to_markdown())
+                        ).format(user_query=user_query,df_columns=', '.join(df.columns),df_types="\n".join([f"- **{col}**: {dtype}" for col, dtype in df.items()]),df_str=df.head(2).to_markdown(),df_task_plan=response.choices[0].message.content)
                             
                             response = client.chat.completions.create(
                                 model="gpt-4o-mini",
