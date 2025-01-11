@@ -359,15 +359,10 @@ if uploaded_file:
                             - Identifying meaningful patterns and relationships
                             - Creating concise, impactful summaries
                             - Explaining data visualizations effectively
-
-                            ### Input Materials
-                            - User Query: {user_question}
-                            - Analysis Code: {task}
-                            - Results Dictionary with visualization: {out_df}
                             
                             ### Summary Structure
 
-                            ### Content Requirements
+                            #### Content Requirements
 
                             1. Summary Section
                             - Direct answer to user query
@@ -414,8 +409,13 @@ if uploaded_file:
 
                             ### Data Visualization
                             [Only if figure exists - visualization analysis] Other wise, remove this section. Donot include this section if no visualization is present.
+
+                            ### Input Materials
+                            - User Query: {user_question}
+                            - Results Dictionary with visualization: {out_df}
+                            
                             """
-                            ).format(user_question=user_query,task=task,out_df=exec_locals["output_dict"])
+                            ).format(user_question=user_query,out_df=exec_locals["output_dict"])
                             
                             response = client.chat.completions.create(
                                 model="gpt-4o-mini",
