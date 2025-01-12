@@ -176,7 +176,6 @@ if uploaded_file:
                         response = client.chat.completions.create(
                             model="gpt-4o",
                             temperature=0,
-                            top_p=0.1,
                             messages=[
                                 {"role": "system", "content": task_planner_prompt},
                                 {"role": "user", "content": user_query}
@@ -300,7 +299,6 @@ if uploaded_file:
                             response = client.chat.completions.create(
                                 model="gpt-4o-mini",
                                 temperature=0,
-                                top_p=0.1,
                                 messages=[
                                     {"role": "system", "content": task_execution_prompt},
                                     {"role": "user", "content": user_query}
@@ -391,7 +389,7 @@ if uploaded_file:
                             - Maintain logical flow of information
                             - Avoid technical jargon unless necessary
                             - Keep insights directly relevant to query
-                            - No assumptions beyond provided data
+                            - Donot assume the data from your own. Give the summary from the Input Context only
                             - No placeholders or generic statements
                             - No explanations about missing visualizations
 
@@ -420,8 +418,7 @@ if uploaded_file:
                             
                             response = client.chat.completions.create(
                                 model="gpt-4o-mini",
-                                temperature=0.1,
-                                top_p=0.1,
+                                temperature=0,
                                 messages=[
                                     {"role": "system", "content": summary_prompt},
                                     {"role": "user", "content": user_query}
