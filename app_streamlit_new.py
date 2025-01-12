@@ -409,19 +409,18 @@ if uploaded_file:
                             [Bullet points of main findings]
 
                             ### Input Context
-                            For the User Question here is the Answer {user_answer} provide a summary.
+                            For the User Question {user_question} here is the Answer {user_answer} provide a summary.
                             
                             ### Data Visualization
                             [Only if figure exists - visualization analysis] Other wise, remove this section. Donot include this section if no visualization is present.
                             """
-                            ).format(user_answer="\n".join([f"**{key}**: {value}" for key, value in exec_locals["output_dict"].items()]))
+                            ).format(user_question=user_query,user_answer="\n".join([f"**{key}**: {value}" for key, value in exec_locals["output_dict"].items()]))
                             
                             response = client.chat.completions.create(
                                 model="gpt-4o-mini",
                                 temperature=0,
                                 messages=[
                                     {"role": "system", "content": summary_prompt},
-                                    {"role": "user", "content": user_query}
                                 ]
                             )
 
