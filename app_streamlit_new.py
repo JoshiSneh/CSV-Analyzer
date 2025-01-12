@@ -411,8 +411,12 @@ if uploaded_file:
                             [Bullet points of main findings]
 
                             ### Input Materials
-                            - User Query: {user_question}
-                            - Results Dictionary with visualization: {out_df}
+                            Question that an user has ask
+                            - User Query:{user_question}
+                            
+                            Summarize the below result for the user query
+                            - Answer to the User Query:\n
+                            {out_df}
                             
                             ### Data Visualization
                             [Only if figure exists - visualization analysis] Other wise, remove this section. Donot include this section if no visualization is present.
