@@ -219,7 +219,7 @@ if uploaded_file:
                             
                             #### Instructions for Generating Python Code:
                             - Think step by step when generating the Python code based on the task plan.
-                            - Always see the previous tasks block of code and then generate the current task or future task by taking consideration of the current task.
+                            - Always see the previous tasks block of code and then generate the current task or future task by taking consideration of the current task description.
                             - Handle the cases that can return nan or None from the previous task.
                             - Use zip(*...)  simplify for the unpacking and this will avoid alignment issues during assignment.
                             - Import all necessary libraries at the beginning of the code.
