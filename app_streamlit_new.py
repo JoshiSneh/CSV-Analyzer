@@ -361,7 +361,7 @@ if uploaded_file:
                             - Creating concise, impactful summaries
                             - Explaining data visualizations effectively
 
-                            ### User Question
+                            ### Input Context (User Question)
                             {user_question}
                             
                             ### Summary Structure
@@ -411,7 +411,7 @@ if uploaded_file:
                             ### Key Insights
                             [Bullet points of main findings]
 
-                            ### Answer for the User Question
+                            ### Input Context (User Answer)
                             {user_answer}
                             
                             ### Data Visualization
