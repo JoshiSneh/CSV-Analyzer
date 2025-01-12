@@ -392,7 +392,7 @@ if uploaded_file:
                             - Maintain logical flow of information
                             - Avoid technical jargon unless necessary
                             - Keep insights directly relevant to query
-                            - Donot mix the User Question with the User Answer for the final answer. It will be a wrong output.
+                            - Ensure that the User Question and User Answer are handled separately when generating the final output. Mixing them could lead to incorrect results.
                             - No placeholders or generic statements
                             - No explanations about missing visualizations
 
