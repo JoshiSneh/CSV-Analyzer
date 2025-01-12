@@ -236,7 +236,7 @@ if uploaded_file:
                             - Always final output should be stored in a variable named `output_dict` with all the necessary information.
 
                             #### Code Standards
-                             - Import all the required packages required for the tasks
+                             - Import all the required packages for the tasks
 
                             - Each operation follows task plan sequence
                             - No deprecated pandas methods
