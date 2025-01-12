@@ -157,6 +157,11 @@ if uploaded_file:
                         - Focus on DataFrame operations only.
                         - Always maintain the Keys formation in the `output_dict` as mentioned above. First word should start with uppercase with space separated words.
                         
+                        ### Output Format
+                        Task-1: [Precise action description]
+                        Task-2: [Precise action description]
+                        [...]
+
                         ### Input Context
                         - Available DataFrame: `df`
                         - User Query: {user_query}
@@ -164,12 +169,7 @@ if uploaded_file:
                         - Datatypes: {df_types}
                         - Dataframe Preview: {df_str}
                         
-                        ### Output Format
-                        Task-1: [Precise action description]
-                        Task-2: [Precise action description]
-                        [...]
-                        
-                        **Provide only the task plan. Do not include any additional explanations or commentary or python code or output or any other informations**
+                        **Provide only the task plan description. Do not include any additional explanations or commentary or python code or output or any other informations**
                         """
                         ).format(user_query=user_query,df_columns=', '.join(df.columns),df_types="\n".join([f"- **{col}**: {dtype}" for col, dtype in df.items()]),df_str=df.head(2).to_markdown())
                         
