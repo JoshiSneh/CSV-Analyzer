@@ -392,7 +392,7 @@ if uploaded_file:
                             - Maintain logical flow of information
                             - Avoid technical jargon unless necessary
                             - Keep insights directly relevant to query
-                            - Donot assume the data from your own. Give the summary from the Input Context only
+                            - Donot mix the User Question with the User Answer for the final answer. It will be a wrong output.
                             - No placeholders or generic statements
                             - No explanations about missing visualizations
 
