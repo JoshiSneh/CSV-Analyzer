@@ -360,6 +360,9 @@ if uploaded_file:
                             - Identifying meaningful patterns and relationships
                             - Creating concise, impactful summaries
                             - Explaining data visualizations effectively
+
+                            ### User Question
+                            {user_question}
                             
                             ### Summary Structure
 
@@ -408,8 +411,8 @@ if uploaded_file:
                             ### Key Insights
                             [Bullet points of main findings]
 
-                            ### Input Context
-                            For the User Question {user_question} here is the Answer {user_answer} provide a summary.
+                            ### Answer for the User Question
+                            {user_answer}
                             
                             ### Data Visualization
                             [Only if figure exists - visualization analysis] Other wise, remove this section. Donot include this section if no visualization is present.
