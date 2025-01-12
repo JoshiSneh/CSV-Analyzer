@@ -413,11 +413,12 @@ if uploaded_file:
                             ### Input Materials
                             - User Query: {user_question}
                             - Results Dictionary with visualization: {out_df}
+                            - Dataframe Preview: {df_str}
 
                             ### Data Visualization
                             [Only if figure exists - visualization analysis] Other wise, remove this section. Donot include this section if no visualization is present.
                             """
-                            ).format(user_question=user_query,out_df=exec_locals["output_dict"])
+                            ).format(user_question=user_query,out_df=exec_locals["output_dict"],df_str=df.head(1).to_markdown())
                             
                             response = client.chat.completions.create(
                                 model="gpt-4o-mini",
