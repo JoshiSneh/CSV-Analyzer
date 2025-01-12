@@ -177,8 +177,7 @@ if uploaded_file:
                             model="gpt-4o",
                             temperature=0,
                             messages=[
-                                {"role": "system", "content": task_planner_prompt},
-                                {"role": "user", "content": user_query}
+                                {"role": "system", "content": task_planner_prompt}
                             ]
                         )
                         
@@ -300,8 +299,7 @@ if uploaded_file:
                                 model="gpt-4o-mini",
                                 temperature=0,
                                 messages=[
-                                    {"role": "system", "content": task_execution_prompt},
-                                    {"role": "user", "content": user_query}
+                                    {"role": "system", "content": task_execution_prompt}
                                 ]
                             )
 
