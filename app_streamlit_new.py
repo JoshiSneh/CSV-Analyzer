@@ -410,18 +410,13 @@ if uploaded_file:
                             ### Key Insights
                             [Bullet points of main findings]
 
-                            ### Input Materials
-                            Question that an user has ask
-                            - User Query:{user_question}
-                            
-                            Summarize the below result for the user query
-                            - Answer to the User Query:\n
-                            {out_df}
+                            ### Input Context
+                            For the User Question {user_question} here is the Answer {user_answer} provide a summary.
                             
                             ### Data Visualization
                             [Only if figure exists - visualization analysis] Other wise, remove this section. Donot include this section if no visualization is present.
                             """
-                            ).format(user_question=user_query,out_df="\n".join([f"**{key}**: {value}" for key, value in exec_locals["output_dict"].items()]),df_str=df.head(1).to_markdown())
+                            ).format(user_answer="\n".join([f"**{key}**: {value}" for key, value in exec_locals["output_dict"].items()]),df_str=df.head(1).to_markdown())
                             
                             response = client.chat.completions.create(
                                 model="gpt-4o-mini",
