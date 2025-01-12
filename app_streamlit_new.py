@@ -236,13 +236,7 @@ if uploaded_file:
                             - Always final output should be stored in a variable named `output_dict` with all the necessary information.
 
                             #### Code Standards
-                            Import all the required imports
-                            Required imports:
-                            - import pandas as pd
-                            - import numpy as np
-                            - import plotly.express as px
-                            - import plotly.graph_objects as go
-                            - import re
+                             - Import all the required packages required for the tasks
 
                             - Each operation follows task plan sequence
                             - No deprecated pandas methods
