@@ -218,7 +218,9 @@ if uploaded_file:
                             - All calculations must preserve data types specified in `df_types`
                             
                             #### Instructions for Generating Python Code:
-                            - Think step by step when generating the Python code based on the user query
+                            - Think step by step when generating the Python code based on the task plan.
+                            - Always see the previous tasks block of code and then generate the current task or future task by taking consideration of the current task.
+                            - Handle the cases that can return nan or None from the previous task.
                             - Use zip(*...)  simplify for the unpacking and this will avoid alignment issues during assignment.
                             - Import all necessary libraries at the beginning of the code.
                             - Example: import pandas as pd, import plotly.express as px.
