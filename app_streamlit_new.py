@@ -216,6 +216,8 @@ if uploaded_file:
 
                             #### Data Operations
                             - All operations must use exact column names from `df_columns`
+                            - Use the columns name accurately given in the `df_task_plan`
+                            - Never use any random or vague column names for the dataframe operations
                             - Intermediate results stored as pandas DataFrames
                             - Variables must have descriptive names reflecting their content
                             - All calculations must preserve data types specified in `df_types`
