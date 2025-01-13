@@ -342,7 +342,7 @@ if uploaded_file:
                                         # graph_visual[key] = value.to_json()
                                         visual = True
 
-                             if visual == False:
+                            if visual == False:
                                 exec_locals["output_dict"]["fig"] = None
                             # print(exec_locals["output_dict"])
 
