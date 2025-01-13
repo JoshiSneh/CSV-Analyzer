@@ -141,7 +141,7 @@ if uploaded_file:
                         - Include all necessary parameters
 
                         4. Final Output Structure:
-                        - Create output_dict containing:
+                        - Create output_dict as the final dictionary to store results
                         - Key should be descriptive of the result
                         - Visualization should be start with 'fig' if applicable
                         - Meaningful, case-sensitive keys describing contents
