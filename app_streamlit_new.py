@@ -322,6 +322,7 @@ if uploaded_file:
                             
                             # graph_visual = {}
 
+                            visual = False
                             if "output_dict" in exec_locals:
                                 for key, value in exec_locals["output_dict"].items():
                                     if isinstance(value, pd.DataFrame):
@@ -339,8 +340,10 @@ if uploaded_file:
                                     elif isinstance(value, go.Figure):
                                         st.plotly_chart(value, use_container_width=True)
                                         # graph_visual[key] = value.to_json()
-                                    else:
-                                        exec_locals["output_dict"]["fig"] = None
+                                        visual = True
+
+                             if visual == False:
+                                exec_locals["output_dict"]["fig"] = None
                             # print(exec_locals["output_dict"])
 
                             st.session_state.execution_complete = True
