@@ -148,6 +148,7 @@ if uploaded_file:
                         - Final result should be stored in a variable named `output_dict`
                         - Include all relevant dataframes and visualizations in `output_dict`. Identify based on the user query and then provide the output.
                         - If there are any important dataframes, like such dataframes which are important for the analysis, then include them as well in the output_dict. For example, final result dataframe, comparison dataframe etc.
+                        - Reset the indexs of the final dataframes (if there) before giving the final result.
 
                          ### Quality Standards
                         - No assumptions about unavailable data
