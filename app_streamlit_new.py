@@ -159,7 +159,9 @@ if uploaded_file:
                         
                         ### Output Format
                         Task-1: [Precise action description]
+                          - Column Names: [Give all the column names]
                         Task-2: [Precise action description]
+                          - Column Names: [Give all the column names]
                         [...]
 
                         ### Input Context
