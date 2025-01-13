@@ -163,6 +163,8 @@ if uploaded_file:
                         Task-2: [Precise action description]
                           - Column Names: [Give all the column names used for Task-2 (If there)]
                         [...]
+                        Final/Last Task-N: [Precise action description]
+                          - Keys Names: [Give all the keys names used for the output_dict]
 
                         ### Input Context
                         - Available DataFrame: `df`
