@@ -160,9 +160,9 @@ if uploaded_file:
                         
                         ### Output Format
                         Task-1: [Precise action description]
-                          - Column Names: [Give all the column names used for Task-1 (If there)]
+                          - Column Names: [Give all the column names used for Task-1 (If there) "," separated]
                         Task-2: [Precise action description]
-                          - Column Names: [Give all the column names used for Task-2 (If there)]
+                          - Column Names: [Give all the column names used for Task-2 (If there) "," separated]
                         [...]
                         Task-N: [Precise action description]
                           - Key Names: [Give all the keys names used for the output_dict]
