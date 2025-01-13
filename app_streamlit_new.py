@@ -337,7 +337,7 @@ if uploaded_file:
                                         graph_visual[key] = value.to_json()
                                     else:
                                         graph_visual["fig"] = None
-                            print(exec_locals["output_dict"])
+                            # print(exec_locals["output_dict"])
 
                             st.session_state.execution_complete = True
 
