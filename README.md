@@ -52,7 +52,7 @@ streamlit run app_streamlit_new.py
    - Analysis Planning
    - Execution
    - Summary and Insights
-   - 
+   - Follow-up Questions
 ## Application Structure 🏗️
 
 ```
