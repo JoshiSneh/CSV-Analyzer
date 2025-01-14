@@ -236,6 +236,7 @@ if uploaded_file:
                             - Use functions like pd.to_datetime() to convert columns when necessary.
                             - Add checks or use np.divide with where or np.errstate to handle division by zero safely.
                             - Use .str.strip() to remove leading and trailing spaces before comparisons or transformations.
+                            - Method .str.contains() should be used based on the user query. Think on your own when to directly compare the string or when to use .str.contains()
                             - If for a operation a extraction of part is required from a string value then handle that carefully.
                             - For string extraction (e.g., using .str.extract()), ensure the regex pattern matches correctly and handles edge cases.
                             - Always validate data structure before unpacking to ensure operations like string splitting or regex extraction return the expected elements. Use checks or defaults to handle missing elements.
