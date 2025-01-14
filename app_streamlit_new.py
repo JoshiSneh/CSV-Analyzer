@@ -120,7 +120,7 @@ if uploaded_file:
                         - Focused on DataFrame operations
                         - Contributing to the final solution
                         - Evaluate the context of the user query to determine the appropriate string comparison method.
-                        - Use direct string comparisons for exact matches, and apply flexible matching techniques when broader criteria are required.
+                        - Apply flexible string matching techniques when broader criteria are required.
                         - Building logically on previous steps
                         - When doing the string extraction from the columns make sure to handle the case of the existance or not.
                         - Make sure to handle all edge cases and potential data issues gracefully. For example, missing values, incorrect data types etc.
