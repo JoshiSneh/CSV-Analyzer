@@ -85,9 +85,7 @@ OPENAI_API_KEY=your_api_key_here
 
 ## Limitations ⚠️
 
-- Limited to CSV file format
-- Analysis complexity depends on OpenAI API response
-- Processing time may vary based on data size and query complexity
+- Currently, it cannot retry the Python code if the code failed to get executed.
 
 ## License 📄
 
