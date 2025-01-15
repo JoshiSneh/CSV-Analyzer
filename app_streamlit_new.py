@@ -170,7 +170,7 @@ if uploaded_file:
                           - Column Names: [Give all the column names used for Task-2 (If there), comma (",") separated in a list]
                         [...]
                         Task-N: [Precise action description]
-                          - Key Names: [Give all the keys names used for the output_dict dictionary]
+                          - Key Names: [Give all the keys names used for the `output_dict` dictionary]
 
                         ### Input Context
                         - Available DataFrame: `df`
