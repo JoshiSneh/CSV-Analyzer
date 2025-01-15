@@ -115,19 +115,22 @@ if uploaded_file:
 
                         ### Core Requirements
                         1. Each task must be:
-                        - Specific and directly executable with the `exec()` function of Python.
+                        - Specific and directly executable with the `exec()` function of Python
                         - Based solely on available columns. Donot assume additional data or columns
                         - Focused on DataFrame operations
                         - Contributing to the final solution
-                        - Evaluate the context of the user query to determine the appropriate string comparison method.
+                        - Evaluate the context of the user query to determine the appropriate string comparison method
                         - Apply flexible string matching techniques when broader criteria are required.
                         - Building logically on previous steps
-                        - When doing the string extraction from the columns make sure to handle the case of the existance or not.
-                        - Make sure to handle all edge cases and potential data issues gracefully. For example, missing values, incorrect data types etc.
-                        - Donot generate task that can't be executed on the given dataframe and throw an error.
-                        - At last, convert all the important operations into a dataframe and give the result.
-                        - If there is a final dataframe then to DONOT convert that to the dictionary format. Keep the dataframes as it is.
-                        - Mention all the Keys required in the required format for the final result with the last task.
+                        - When doing the string extraction from the columns make sure to handle the case of the existance or not
+                        - Make sure to handle all edge cases and potential data issues gracefully. For example, missing values, incorrect data types etc
+                        - Donot generate task that can't be executed on the given dataframe and throw an error
+                        - Make sure all non-JSON serializable column types (e.g., pd.Period) in the DataFrame
+                        - Convert such columns to serializable formats like strings using .astype(str)
+                        - Confirm the updated DataFrame is compatible with Plotly visualizations
+                        - At last, convert all the important operations into a dataframe and give the result
+                        - If there is a final dataframe then to DONOT convert that to the dictionary format. Keep the dataframes as it is
+                        - Mention all the Keys required in the required format for the final result with the last task
                         
                         2. Variable Management:
                         - Store key intermediate results as DataFrame operations
@@ -136,9 +139,6 @@ if uploaded_file:
 
                         3. Visualization Requirements (if needed):
                         - Use Plotly exclusively
-                        - Identify non-JSON serializable column types (e.g., pd.Period) in the DataFrame
-                        - Convert such columns to serializable formats like strings using .astype(str)
-                        - Confirm the updated DataFrame is compatible with Plotly visualizations.
                         - Make sure to generate the visualization based on the user query and the previous task. Look for the previous steps and then generate the visualization accordingly.
                         - Never generate the task with wrong x and y axis. Always look for the previous steps and then generate the visualization accordingly. 
                         - Store plot in variable 'fig' and if multiple plots are needed, then use suffix as `fig_`
