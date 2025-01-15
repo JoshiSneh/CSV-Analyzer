@@ -131,7 +131,6 @@ if uploaded_file:
                         - At last, convert all the important operations into a dataframe and give the result
                         - If there is a final dataframe then to DONOT convert that to the dictionary format. Keep the dataframes as it is
                         - Mention all the Keys required in the required format for the final result with the last task
-                        - Mention the name of the output dictionary of the final result in the last task.
                         
                         2. Variable Management:
                         - Store key intermediate results as DataFrame operations
