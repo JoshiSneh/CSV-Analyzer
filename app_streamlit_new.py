@@ -169,7 +169,7 @@ if uploaded_file:
                         Task-2: [Precise action description]
                           - Column Names: [Give all the column names used for Task-2 (If there), comma (",") separated in a list]
                         [...]
-                        Task-N: [Precise action description]
+                        Task-N: [Precise action description - Compile the results into the final output dictionary 'output_dict'...]
                           - Key Names: [Give all the keys names used for the `output_dict` dictionary]
 
                         ### Input Context
