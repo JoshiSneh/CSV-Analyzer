@@ -136,7 +136,9 @@ if uploaded_file:
 
                         3. Visualization Requirements (if needed):
                         - Use Plotly exclusively
-                        - Convert non-JSON serializable DataFrame columns (e.g., pd.Period) to serializable formats to ensure compatibility with Plotly visualizations.
+                        - Identify non-JSON serializable column types (e.g., pd.Period) in the DataFrame
+                        - Convert such columns to serializable formats like strings using .astype(str)
+                        - Confirm the updated DataFrame is compatible with Plotly visualizations.
                         - Make sure to generate the visualization based on the user query and the previous task. Look for the previous steps and then generate the visualization accordingly.
                         - Never generate the task with wrong x and y axis. Always look for the previous steps and then generate the visualization accordingly. 
                         - Store plot in variable 'fig' and if multiple plots are needed, then use suffix as `fig_`
