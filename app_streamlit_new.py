@@ -131,6 +131,7 @@ if uploaded_file:
                         - At last, convert all the important operations into a dataframe and give the result
                         - If there is a final dataframe then to DONOT convert that to the dictionary format. Keep the dataframes as it is
                         - Mention all the Keys required in the required format for the final result with the last task
+                        - Mention the name of the output dictionary of the final result in the last task.
                         
                         2. Variable Management:
                         - Store key intermediate results as DataFrame operations
@@ -170,7 +171,7 @@ if uploaded_file:
                           - Column Names: [Give all the column names used for Task-2 (If there), comma (",") separated in a list]
                         [...]
                         Task-N: [Precise action description]
-                          - Key Names: [Give all the keys names used for the output_dict]
+                          - Key Names: [Give all the keys names used for the output_dict dictionary]
 
                         ### Input Context
                         - Available DataFrame: `df`
@@ -247,6 +248,7 @@ if uploaded_file:
                             - For string extraction (e.g., using .str.extract()), ensure the regex pattern matches correctly and handles edge cases.
                             - Always validate data structure before unpacking to ensure operations like string splitting or regex extraction return the expected elements. Use checks or defaults to handle missing elements.
                             - Use multiple functions if required to achieve the desired result
+                            - If a final DataFrame is present, ensure it is not converted to a dictionary format. Retain the DataFrame in its original structure.
                             - Always final output should be stored in a variable named `output_dict` with all the necessary information.
 
                             #### Code Standards
