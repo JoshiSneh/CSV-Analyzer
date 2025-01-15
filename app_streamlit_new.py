@@ -229,6 +229,7 @@ if uploaded_file:
                             - Think step by step when generating the Python code based on the task plan.
                             - Always see the previous tasks block of code and then generate the current task or future task by taking consideration of the current task description.
                             - Handle the cases that can return nan or None from the previous task.
+                            - Ensure all DataFrame columns used in visualization or serialization are in JSON serializable formats, converting non-serializable types like pd.Period to strings using .astype(str) as needed for compatibility. 
                             - Use zip(*...)  simplify for the unpacking and this will avoid alignment issues during assignment.
                             - Import all necessary libraries at the beginning of the code.
                             - Example: import pandas as pd, import plotly.express as px.
@@ -246,8 +247,7 @@ if uploaded_file:
                             - Always final output should be stored in a variable named `output_dict` with all the necessary information.
 
                             #### Code Standards
-                             - Import all the required packages for the tasks
-
+                            - Import all the required packages for the tasks
                             - Each operation follows task plan sequence
                             - No deprecated pandas methods
                             - Consistent variable naming
