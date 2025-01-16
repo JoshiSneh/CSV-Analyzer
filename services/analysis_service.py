@@ -35,7 +35,7 @@ class AnalysisService:
 
 
     def _generate_analysis_plan(self):
-        """Generate analysis plan using OpenAI."""
+        """Generate analysis plan."""
         with st.status("Generating Analysis Plan") as status:
 
             task_planner_prompt = (
