@@ -57,9 +57,13 @@ streamlit run app_streamlit_new.py
 
 ```
 csv-analyzer/
-|-- config
-├── app_streamlit_new.py # Main application file
-├── requirements.txt    # Project dependencies
+|-- config/settings.py
+|-- services/analysis_service.py
+|-- services/openai_service.py
+|-- utils/data_loader.py
+|-- utils/visualization.py
+|-- app_streamlit_new.py # Main application file
+|-- requirements.txt    # Project dependencies
 └── README.md          # Documentation
 ```
 
