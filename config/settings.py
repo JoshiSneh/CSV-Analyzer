@@ -18,3 +18,5 @@ def setup_session_state():
         st.session_state.task_plan = None
     if 'execution' not in st.session_state:
         st.session_state.execution = None
+    if 'code' not in st.session_state:
+        st.session_state.code = None

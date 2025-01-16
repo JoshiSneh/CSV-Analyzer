@@ -6,6 +6,7 @@ import io
 import plotly.express as px
 import numpy as np
 import re
+from contextlib import redirect_stdout, redirect_stderr
 
 class AnalysisService:
     def __init__(self, openai_service, df):
@@ -21,17 +22,21 @@ class AnalysisService:
             self._generate_analysis_plan()
             
             if st.session_state.analysis_complete:
-                self._execute_analysis()
-                
+                self._generate_code()
+            
+            if st.session_state.code_generate:
+                self._generate_analysis()
+
             if st.session_state.execution_complete:
                 self._generate_summary()
                 
             if st.session_state.summary_complete:
                 self._generate_questions()
 
+
     def _generate_analysis_plan(self):
         """Generate analysis plan using OpenAI."""
-        with st.status("Generating analysis plan...") as status:
+        with st.status("Generating Analysis Plan") as status:
 
             task_planner_prompt = (
             """
@@ -41,64 +46,101 @@ class AnalysisService:
             ### Core Requirements
             1. Each task must be:
             - Specific and directly executable with the `exec()` function of Python
-            - Based solely on available columns. Donot assume additional data or columns
+            - Based solely on available columns. Do not assume additional data or columns
             - Focused on DataFrame operations
             - Contributing to the final solution
             - Evaluate the context of the user query to determine the appropriate string comparison method
-            - Apply flexible string matching techniques when broader criteria are required.
+            - Apply flexible string matching techniques when broader criteria are required
             - Building logically on previous steps
-            - When doing the string extraction from the columns make sure to handle the case of the existance or not
+            - When doing string extraction from columns make sure to handle the existence or not
             - Make sure to handle all edge cases and potential data issues gracefully. For example, missing values, incorrect data types etc
-            - Donot generate task that can't be executed on the given dataframe and throw an error
+            - Do not generate tasks that can't be executed on the given dataframe and throw an error
             - Make sure all non-JSON serializable column types (e.g., pd.Period) in the DataFrame
             - Convert such columns to serializable formats like strings using .astype(str)
             - Confirm the updated DataFrame is compatible with Plotly visualizations
             - At last, convert all the important operations into a dataframe and give the result
-            - If there is a final dataframe then to DONOT convert that to the dictionary format. Keep the dataframes as it is
+            - If there is a final dataframe then DO NOT convert that to the dictionary format. Keep the dataframes as it is
             - Mention all the Keys required in the required format for the final result with the last task
-            
-            2. Variable Management:
+
+            2. Task Structure:
+            - Each main task should be broken down into detailed sub-tasks
+            - Sub-tasks should represent atomic operations that build up to complete the main task
+            - Each sub-task should be directly executable and handle one specific aspect
+            - Sub-tasks should include data type validations and conversions where needed
+            - Sub-tasks should handle error cases and edge conditions
+            - Sub-tasks should build progressively toward the main task goal
+
+            3. Variable Management:
             - Store key intermediate results as DataFrame operations
             - Use descriptive variable names related to their content
             - Maintain data types appropriate for the analysis
+            - Each sub-task should clearly specify any new variables created
 
-            3. Visualization Requirements (if needed):
+            4. Visualization Requirements (if needed):
             - Use Plotly exclusively
-            - Make sure to generate the visualization based on the user query and the previous task. Look for the previous steps and then generate the visualization accordingly.
-            - Never generate the task with wrong x and y axis. Always look for the previous steps and then generate the visualization accordingly. 
+            - Make sure to generate the visualization based on the user query and the previous task. Look for the previous steps and then generate the visualization accordingly
+            - Never generate the task with wrong x and y axis. Always look for the previous steps and then generate the visualization accordingly
             - Store plot in variable 'fig' and if multiple plots are needed, then use suffix as `fig_`
             - Specify exact chart type and columns
             - Include all necessary parameters
 
-            4. Final Output Structure:
+            5. Final Output Structure:
             - Create output_dict as the final dictionary to store results
             - Key should be descriptive of the result
-            - Visualization should be start with 'fig' if applicable
+            - Visualization should start with 'fig' if applicable
             - Meaningful, case-sensitive keys describing contents
             - Final result should be stored in a variable named `output_dict`
-            - Include all relevant dataframes and visualizations in `output_dict`. Identify based on the user query and then provide the output.
-            - If there are any important dataframes, like such dataframes which are important for the analysis, then include them as well in the output_dict. For example, final result dataframe, comparison dataframe etc.
-            - Reset the indexs of the final dataframes (if there) before giving the final result.
+            - Include all relevant dataframes and visualizations in `output_dict`. Identify based on the user query and then provide the output
+            - If there are any important dataframes, like such dataframes which are important for the analysis, then include them as well in the `output_dict`. For example, final result dataframe, comparison dataframe etc
+            - Reset the indexes of the final dataframes (if there) before giving the final result
 
-                ### Quality Standards
+            ### Quality Standards
             - No assumptions about unavailable data
             - No skipped or redundant steps
             - Clear progression toward solution
             - Complete but concise descriptions
-            - Focus on DataFrame operations only.
-            - Always maintain the Keys formation in the `output_dict` as mentioned above. First word should start with uppercase with space separated words.
-            
+            - Focus on DataFrame operations only
+            - Always maintain the Keys formation in the `output_dict` as mentioned above. First word should start with uppercase with space separated words
+
+
             ### Output Format
             Task-1: [Precise action description]
+                Sub-Task-1.1: [Detailed breakdown of first component]
+                Sub-Task-1.2: [Detailed breakdown of second component]
+                ...
+                Sub-Task-1.n: [Final component of Task-1]
                 - Column Names: [Provide all the column names used for Task-1, formatted as a comma-separated list:
-["Column-1", "Column-2", "Column-3", ...]]\n
+                ["Column-1", "Column-2", "Column-3", ...]]
+
             Task-2: [Precise action description]
+                Sub-Task-2.1: [Detailed breakdown of first component]
+                Sub-Task-2.2: [Detailed breakdown of second component]
+                ...
+                Sub-Task-2.n: [Final component of Task-2]
                 - Column Names: [Provide all the column names used for Task-2, formatted as a comma-separated list:
-["Column-1", "Column-2", "Column-3", ...]]\n
+                ["Column-1", "Column-2", "Column-3", ...]]
+
             [...]
-            Task-N: [Precise action description - Compile the processed results and store them in the final output dictionary named `output_dict`... (This instruction will be applied every time.)]
+
+            Task-N: [Precise action description - Compile the processed results and store them in the final output dictionary named `output_dict`]
+                Sub-Task-N.1: [Detailed breakdown of first component]
+                Sub-Task-N.2: [Detailed breakdown of second component]
+                ...
+                Sub-Task-N.n: [Final component of Task-N]
                 - Key Names: [Provide all the key names used in the `output_dict` dictionary.]
-                - Values:[For each key, describe the expected value, including details of the information it should contain, formatted as a dictionary: {{"Key-1": "Description of the information contained in this key", "Key-2": "Description of the information contained in this key", ...}}]
+                - Values: [For each key, describe the expected value, including details of the information it should contain, formatted as a dictionary: {{"Key-1": "Description of the information contained in this key", "Key-2": "Description of the information contained in this key", ...}}]
+
+            ### Example Task Breakdown
+             - The below is an example of how the task breakdown should be structured. Follow the same structure for each task in the task plan.
+
+             - Task-1: Extract start and end times from the 'Transaction Description' column and calculate the duration of each transaction in hours.
+                Sub-Task-1.2: Extract start time using regex pattern matching
+                Sub-Task-1.3: Convert extracted start time to datetime format
+                Sub-Task-1.4: Extract end time using regex pattern matching
+                Sub-Task-1.5: Convert extracted end time to datetime format
+                Sub-Task-1.6: Calculate duration in hours between start and end times
+                Sub-Task-1.7: Handle invalid time formats and edge cases
+                Sub-Task-1.8: Create new column 'Duration_Hours' with calculated values
 
             ### Input Context
             - Available DataFrame: `df`
@@ -106,14 +148,14 @@ class AnalysisService:
             - Available Columns: {df_columns}
             - Datatypes: {df_types}
             - Dataframe Preview: {df_str}
-            
-            **Provide only the task plan description. Do not include any additional explanations or commentary or python code or output or any other informations**
+
+            **Provide only the task plan description. Do not include any additional explanations or commentary or python code or output or any other information**
             """).format(user_query=st.session_state.current_query,df_columns=', '.join(self.df.columns),df_types="\n".join([f"- **{col}**: {dtype}" for col, dtype in self.df.items()]),df_str=self.df.head(2).to_markdown())
             
             response = self.openai_service.create_completion_task(task_planner_prompt)
                     
             time.sleep(1)
-            status.update(label="✅ Analysis plan generated!", state="complete")
+            status.update(label="✅ Analysis Plan Generated!", state="complete")
             st.code(response.choices[0].message.content)
             st.caption(f"Task Planner Token usage: {response.usage.total_tokens}")
             st.caption(f"Cached Token: {response.usage.prompt_tokens_details.cached_tokens}")
@@ -121,9 +163,32 @@ class AnalysisService:
             st.session_state.analysis_complete = True
             st.session_state.task_plan = response.choices[0].message.content
 
-    def _execute_analysis(self):
-        """Execute the analysis plan."""
-        with st.status("Executing analysis......") as status:
+    def _execute_task_code(self,code):
+        
+        try:
+            exec_globals = {"df": self.df, "pd": pd, "px": px, "io": io, "np": np,"re":re}
+            exec_locals = {}
+
+            # Capture stdout and stderr
+            stdout = io.StringIO()
+            stderr = io.StringIO()
+
+            with redirect_stdout(stdout), redirect_stderr(stderr):
+                exec(code, exec_globals, exec_locals)
+            
+            # st.warning(exec_locals)
+            # Check if output_dict exists in the executed code
+            if "output_dict" not in exec_locals:
+                raise ValueError("Missing output_dict")      
+                
+            return exec_locals["output_dict"], None
+            
+        except Exception as e:
+            return None, e
+
+    def _generate_code(self):
+        """Generating Code"""
+        with st.status("Generating Code") as status:
             task_execution_prompt = (
             """
             ### Task Execution System
@@ -208,7 +273,6 @@ class AnalysisService:
             ### Execution Plan
             - {df_task_plan}
 
-            
             ---
             
             ### Context
@@ -219,32 +283,45 @@ class AnalysisService:
             - Dataframe Preview: {df_str}
             
             ---
-            
-            **Provide only the Python Code which can be run with the `exec()`. Do not include any additional explanations or commentary**
+
+            **Provide only the Correct Python Code which can be run with the `exec()`. Do not include any additional explanations or commentary**
             """).format(df_task_plan=st.session_state.task_plan,user_query=st.session_state.current_query,df_columns=', '.join(self.df.columns),df_types="\n".join([f"- **{col}**: {dtype}" for col, dtype in self.df.items()]),df_str=self.df.head(2).to_markdown())
-            
+
             response = self.openai_service.create_completion_task(task_execution_prompt)
                         
             time.sleep(1.5) 
-            status.update(label="✅ Analysis complete!", state="complete")
+            status.update(label="✅ Code Generated!", state="complete")
                 
             task = response.choices[0].message.content
             task = task.replace('`', '').replace("python", "").strip()
             
             st.code(task, language="python")
-            st.caption(f"Task Execution Token usage: {response.usage.total_tokens}")
+
+            # #Execute the code
+            # exec_globals = {"df": self.df, "pd": pd, "px": px, "io": io, "np": np,"re":re}
+            # exec_locals = {}
+            # exec(task, exec_globals, exec_locals)
+
+            st.caption(f"Code Generation Token usage: {response.usage.total_tokens}")
             st.caption(f"Cached Token: {response.usage.prompt_tokens_details.cached_tokens}")
 
-            # Execute the code
-            exec_globals = {"df": self.df, "pd": pd, "px": px, "io": io, "np": np,"re":re}
-            exec_locals = {}
-            exec(task, exec_globals, exec_locals)
-            
-            # graph_visual = {}
+            st.session_state.code_generate = True
+            st.session_state.code = task
+
+    def _generate_analysis(self):
+
+        with st.status("Executing Code") as status:
+            output_dict, error = self._execute_task_code(st.session_state.code)
+
+            if error:
+                st.error(f"❌ An error occurred during code execution: {str(error)}")
+                status.update(label="❌ Code Execution Failed!", state="error")
+                return
 
             visual = False
-            if "output_dict" in exec_locals:
-                for key, value in exec_locals["output_dict"].items():
+            
+            if output_dict:
+                for key, value in output_dict.items():
                     if isinstance(value, pd.DataFrame):
                             st.write(f"📈 {key}")
                             st.dataframe(value, use_container_width=True)
@@ -261,17 +338,21 @@ class AnalysisService:
                         st.plotly_chart(value, use_container_width=True)
                         # graph_visual[key] = value.to_json()
                         visual = True
+                    else:
+                        st.warning(f"{key}: {value}")
 
-            if visual == False:
-                exec_locals["output_dict"]["fig"] = None
-            # print(exec_locals["output_dict"])
-            
-            st.session_state.execution_complete = True
-            st.session_state.execution = exec_locals["output_dict"]
+                if visual == False:
+                    output_dict["fig"] = None
+                
+                time.sleep(1.0) 
+                status.update(label="✅ Code Executed!", state="complete")
+
+                st.session_state.execution_complete = True
+                st.session_state.execution = output_dict
 
     def _generate_summary(self):
         """Generate analysis summary."""
-        with st.status("Generating insights...") as status:
+        with st.status("Generating Insights") as status:
             summary_prompt = ("""
             ### Data Summary Assistant
 
@@ -343,7 +424,7 @@ class AnalysisService:
             response = self.openai_service.create_completion_summary(summary_prompt)
                         
             time.sleep(1)
-            status.update(label="✅ Insights generated!", state="complete")
+            status.update(label="✅ Insights Generated!", state="complete")
             
             st.subheader("🎯 Key Insights")
             st.markdown(response.choices[0].message.content)
@@ -353,7 +434,7 @@ class AnalysisService:
 
     def _generate_questions(self):
         """Generate follow-up questions."""
-        with st.status("Generating insights...") as status:
+        with st.status("Generating Questions") as status:
             follow_up_prompt = ("""
             # Follow-up Question Generator
 
@@ -399,7 +480,7 @@ class AnalysisService:
             response = self.openai_service.create_completion_summary(follow_up_prompt)
             
             time.sleep(1)
-            status.update(label="✅ Questions generated!", state="complete")
+            status.update(label="✅ Questions Generated!", state="complete")
             
             st.subheader("🔍 Follow-up Questions")
             st.markdown(response.choices[0].message.content)
