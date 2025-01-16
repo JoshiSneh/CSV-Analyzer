@@ -152,7 +152,6 @@ class AnalysisService:
             - Always see the previous tasks block of code and then generate the current task or future task by taking consideration of the current task description.
             - Handle the cases that can return nan or None from the previous task.
             - Ensure all DataFrame columns used in visualization or serialization are in JSON serializable formats, converting non-serializable types like pd.Period to strings using .astype(str) as needed for compatibility. 
-            - Use zip(*...)  simplify for the unpacking and this will avoid alignment issues during assignment.
             - Import all necessary libraries at the beginning of the code.
             - Example: import pandas as pd, import plotly.express as px.
             - Check if each value in the column matches the expected format (e.g., datetime format or other expected patterns). Only perform operations (such as parsing or calculations) on values that match the required format, and skip or ignore any non-matching values to avoid errors.
