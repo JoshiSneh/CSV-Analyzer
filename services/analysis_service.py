@@ -95,6 +95,7 @@ class AnalysisService:
             - Reset the indexes of the final dataframes (if there) before giving the final result
 
             ### Quality Standards
+            ### Quality Standards
             - No assumptions about unavailable data
             - No skipped or redundant steps
             - Clear progression toward solution
@@ -218,7 +219,6 @@ class AnalysisService:
             - Always see the previous tasks block of code and then generate the current task or future task by taking consideration of the current task description.
             - Handle the cases that can return nan or None from the previous task.
             - Ensure all DataFrame columns used in visualization or serialization are in JSON serializable formats, converting non-serializable types like pd.Period to strings using .astype(str) as needed for compatibility. 
-            - Use zip(*...)  simplify for the unpacking and this will avoid alignment issues during assignment.
             - Import all necessary libraries at the beginning of the code.
             - Example: import pandas as pd, import plotly.express as px.
             - Check if each value in the column matches the expected format (e.g., datetime format or other expected patterns). Only perform operations (such as parsing or calculations) on values that match the required format, and skip or ignore any non-matching values to avoid errors.
@@ -232,7 +232,8 @@ class AnalysisService:
             - For string extraction (e.g., using .str.extract()), ensure the regex pattern matches correctly and handles edge cases.
             - Always validate data structure before unpacking to ensure operations like string splitting or regex extraction return the expected elements. Use checks or defaults to handle missing elements.
             - Use multiple functions if required to achieve the desired result
-            - If a final DataFrame is present, ensure it is not converted to a dictionary format. Retain the DataFrame in its original structure.
+            - If a final DataFrame is present, ensure it is NOT converted to a dictionary format. Retain the DataFrame in its original structure.
+            - Reset the indexs of the final dataframes before giving the final result.
             - Always final output should be stored in a variable named `output_dict` with all the necessary information.
 
             #### Code Standards
