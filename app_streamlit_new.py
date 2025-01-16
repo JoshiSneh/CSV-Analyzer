@@ -171,6 +171,7 @@ if uploaded_file:
                         [...]
                         Task-N: [Precise action description - Compile the results into the final output dictionary 'output_dict'...]
                           - Key Names: [Give all the keys names used for the `output_dict` dictionary]
+                          - Values:[Give all the values of each key that are there]
 
                         ### Input Context
                         - Available DataFrame: `df`
