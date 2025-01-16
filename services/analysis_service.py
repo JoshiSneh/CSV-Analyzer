@@ -78,9 +78,8 @@ class AnalysisService:
             - Final result should be stored in a variable named `output_dict`
             - Include all relevant dataframes and visualizations in `output_dict`. Identify based on the user query and then provide the output.
             - If there are any important dataframes, like such dataframes which are important for the analysis, then include them as well in the output_dict. For example, final result dataframe, comparison dataframe etc.
-            - Reset the indexs of the final dataframes (if there) before giving the final result.
 
-                ### Quality Standards
+            ### Quality Standards
             - No assumptions about unavailable data
             - No skipped or redundant steps
             - Clear progression toward solution
@@ -167,7 +166,8 @@ class AnalysisService:
             - For string extraction (e.g., using .str.extract()), ensure the regex pattern matches correctly and handles edge cases.
             - Always validate data structure before unpacking to ensure operations like string splitting or regex extraction return the expected elements. Use checks or defaults to handle missing elements.
             - Use multiple functions if required to achieve the desired result
-            - If a final DataFrame is present, ensure it is not converted to a dictionary format. Retain the DataFrame in its original structure.
+            - If a final DataFrame is present, ensure it is NOT converted to a dictionary format. Retain the DataFrame in its original structure.
+            - Reset the indexs of the final dataframes before giving the final result.
             - Always final output should be stored in a variable named `output_dict` with all the necessary information.
 
             #### Code Standards
