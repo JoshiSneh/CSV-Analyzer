@@ -18,7 +18,7 @@ An intelligent CSV file analysis tool powered by OpenAI GPT models and Streamlit
 1. Clone the repository:
 ```bash
 git clone https://github.com/JoshiSneh/CSV-Analyzer.git
-cd scsv-analyzer
+cd csv-analyzer
 ```
 
 2. Create a virtual environment (recommended):
@@ -56,7 +56,8 @@ streamlit run app_streamlit_new.py
 ## Application Structure 🏗️
 
 ```
-smart-csv-analyzer/
+csv-analyzer/
+|-- config
 ├── app_streamlit_new.py # Main application file
 ├── requirements.txt    # Project dependencies
 └── README.md          # Documentation
