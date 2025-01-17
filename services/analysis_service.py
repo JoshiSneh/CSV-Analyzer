@@ -279,6 +279,7 @@ class AnalysisService:
             - Interactive elements when relevant
 
             #### Output Requirements
+            - Keep the format strictly as per the task plan
             - Code only - no explanations.
             - Each step follows from task plan
             - Clean, readable format
