@@ -42,7 +42,18 @@ class AnalysisService:
             """
             ### Task Planning System
             You are a specialized task planning agent. Your role is to create precise, executable schema based task plans for analyzing DataFrame 'df'.
+            
+            ---
 
+            ### Input Context
+            - Available DataFrame: `df`
+            - User Query: {user_query}
+            - Available Columns: {df_columns}
+            - Datatypes of the Columns: {df_types}
+            - Dataframe Preview: {df_str}
+            
+            ---
+            
             ### Core Requirements
             1. Each task must be:
             - Specific and directly executable with the `exec()` function of Python
@@ -142,13 +153,6 @@ class AnalysisService:
                 Sub-Task-1.6: Calculate duration in hours between start and end times
                 Sub-Task-1.7: Handle invalid time formats and edge cases
                 Sub-Task-1.8: Create new column 'Duration_Hours' with calculated values
-
-            ### Input Context
-            - Available DataFrame: `df`
-            - User Query: {user_query}
-            - Available Columns: {df_columns}
-            - Datatypes of the Columns: {df_types}
-            - Dataframe Preview: {df_str}
 
             **Provide only the task plan description. Do not include any additional explanations or commentary or python code or output or any other information**
             """).format(user_query=st.session_state.current_query,df_columns=', '.join(self.df.columns),df_types="\n".join([f"- **{col}**: {dtype}" for col, dtype in self.df.dtypes.items()]),df_str="\n".join([f"- **{col}**: {dtype}" for col, dtype in self.df.items()]))
