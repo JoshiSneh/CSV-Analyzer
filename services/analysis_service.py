@@ -153,7 +153,7 @@ class AnalysisService:
             **Provide only the task plan description. Do not include any additional explanations or commentary or python code or output or any other information**
             """).format(user_query=st.session_state.current_query,df_columns=', '.join(self.df.columns),df_types="\n".join([f"- **{col}**: {dtype}" for col, dtype in self.df.dtypes.items()]),df_str="\n".join([f"- **{col}**: {dtype}" for col, dtype in self.df.items()]))
             
-            response = self.openai_service.create_completion_task(task_planner_prompt)
+            response = self.openai_service.create_completion_summary(task_planner_prompt)
                     
             time.sleep(1)
             status.update(label="✅ Analysis Plan Generated!", state="complete")
@@ -293,7 +293,7 @@ class AnalysisService:
             **Provide only the Correct Python Code which can be run with the `exec()`. Do not include any additional explanations or commentary**
             """).format(df_task_plan=st.session_state.task_plan,user_query=st.session_state.current_query,df_columns=', '.join(self.df.columns),df_types="\n".join([f"- **{col}**: {dtype}" for col, dtype in self.df.dtypes.items()]),df_str="\n".join([f"- **{col}**: {dtype}" for col, dtype in self.df.items()]))
 
-            response = self.openai_service.create_completion_task(task_execution_prompt)
+            response = self.openai_service.create_completion_summary(task_execution_prompt)
                         
             time.sleep(1.5) 
             status.update(label="✅ Code Generated!", state="complete")
