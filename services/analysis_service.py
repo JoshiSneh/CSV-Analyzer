@@ -48,6 +48,7 @@ class AnalysisService:
             - Specific and directly executable with the `exec()` function of Python
             - Based solely on available columns. Do not assume additional data or columns
             - Focused on DataFrame operations
+            - Make sure all the data types are handled properly. Look for the data types first, `df_types`, of the columns and then give the task accordingly. Never assume the data types of the columns on your own.
             - Contributing to the final solution
             - Evaluate the context of the user query to determine the appropriate string comparison method
             - Apply flexible string matching techniques when broader criteria are required
@@ -146,11 +147,11 @@ class AnalysisService:
             - Available DataFrame: `df`
             - User Query: {user_query}
             - Available Columns: {df_columns}
-            - Datatypes: {df_types}
+            - Datatypes of the Columns: {df_types}
             - Dataframe Preview: {df_str}
 
             **Provide only the task plan description. Do not include any additional explanations or commentary or python code or output or any other information**
-            """).format(user_query=st.session_state.current_query,df_columns=', '.join(self.df.columns),df_types="\n".join([f"- **{col}**: {dtype}" for col, dtype in self.df.items()]),df_str=self.df.head(2).to_markdown())
+            """).format(user_query=st.session_state.current_query,df_columns=', '.join(self.df.columns),df_types="\n".join([f"- **{col}**: {dtype}" for col, dtype in self.df.dtypes.items()]),df_str="\n".join([f"- **{col}**: {dtype}" for col, dtype in self.df.items()]))
             
             response = self.openai_service.create_completion_task(task_planner_prompt)
                     
@@ -207,6 +208,7 @@ class AnalysisService:
 
             #### Data Operations
             - All operations must use exact column names from `df_columns`
+            - DONOT assume datatypes from your own. Always look into `df_types` for the datatypes of the columns. Donot assume float as a string and do operation of string on it. Same for others type
             - Use the columns name accurately given in the `df_task_plan`
             - Never use any random or vague column names for the dataframe operations
             - Intermediate results stored as pandas DataFrames
@@ -214,11 +216,13 @@ class AnalysisService:
             - All calculations must preserve data types specified in `df_types`
             - Donot fill null values with any another values
             
-            #### Instructions for Generating Python Code:
+            #### Instructions for Generating Python Code (to be followed strictly):
             - Think step by step when generating the Python code based on the task plan.
             - Always see the previous tasks block of code and then generate the current task or future task by taking consideration of the current task description.
             - Handle the cases that can return nan or None from the previous task.
             - DONOT create a separate function for the task. All the code should be in the same block.
+            - To replace values in columns, use the .replace() method. This method allows you to apply regular expressions (regex) for replacements.
+            - If the column is of string type, you can use the .str property to perform string-specific operations on the values.
             - Ensure all DataFrame columns used in visualization or serialization are in JSON serializable formats, converting non-serializable types like pd.Period to strings using .astype(str) as needed for compatibility. 
             - Import all necessary libraries at the beginning of the code.
             - Example: import pandas as pd, import plotly.express as px.
@@ -281,15 +285,15 @@ class AnalysisService:
             - Available DataFrame: `df`
             - User Query: {user_query}
             - Available Columns: {df_columns}
-            - Datatypes: {df_types}
+            - Datatypes of the Columns: {df_types}
             - Dataframe Preview: {df_str}
             
             ---
 
             **Provide only the Correct Python Code which can be run with the `exec()`. Do not include any additional explanations or commentary**
-            """).format(df_task_plan=st.session_state.task_plan,user_query=st.session_state.current_query,df_columns=', '.join(self.df.columns),df_types="\n".join([f"- **{col}**: {dtype}" for col, dtype in self.df.items()]),df_str=self.df.head(2).to_markdown())
+            """).format(df_task_plan=st.session_state.task_plan,user_query=st.session_state.current_query,df_columns=', '.join(self.df.columns),df_types="\n".join([f"- **{col}**: {dtype}" for col, dtype in self.df.dtypes.items()]),df_str="\n".join([f"- **{col}**: {dtype}" for col, dtype in self.df.items()]))
 
-            response = self.openai_service.create_completion_task(task_execution_prompt)
+            response = self.openai_service.create_completion_summary(task_execution_prompt)
                         
             time.sleep(1.5) 
             status.update(label="✅ Code Generated!", state="complete")
@@ -318,6 +322,8 @@ class AnalysisService:
             if error:
                 st.error(f"❌ An error occurred during code execution: {str(error)}")
                 status.update(label="❌ Code Execution Failed!", state="error")
+                st.session_state.execution_complete = False
+                st.session_state.summary_complete = False
                 return
 
             visual = False
