@@ -57,9 +57,10 @@ class AnalysisService:
             ### Core Requirements
             1. Each task must be:
             - Specific and directly executable with the `exec()` function of Python
+            - Each task and sub-task should involve Python code execution to derive results. For example, identifying trends or patterns should be explicitly linked to Python code that performs the necessary computations or visualizations, rather than being presented as a high-level instruction
             - Based solely on available columns. Do not assume additional data or columns
             - Focused on DataFrame operations
-            - Make sure all the data types are handled properly. Look for the data types first, `df_types`, of the columns and then give the task accordingly. Never assume the data types of the columns on your own.
+            - Make sure all the data types are handled properly. Look for the data types first, `df_types`, of the columns and then give the task accordingly. Never assume the data types of the columns on your own
             - Contributing to the final solution
             - Evaluate the context of the user query to determine the appropriate string comparison method
             - Apply flexible string matching techniques when broader criteria are required
