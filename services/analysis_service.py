@@ -95,7 +95,6 @@ class AnalysisService:
             - Reset the indexes of the final dataframes (if there) before giving the final result
 
             ### Quality Standards
-            ### Quality Standards
             - No assumptions about unavailable data
             - No skipped or redundant steps
             - Clear progression toward solution
@@ -213,6 +212,7 @@ class AnalysisService:
             - Intermediate results stored as pandas DataFrames
             - Variables must have descriptive names reflecting their content
             - All calculations must preserve data types specified in `df_types`
+            - Donot fill null values with any another values
             
             #### Instructions for Generating Python Code:
             - Think step by step when generating the Python code based on the task plan.
