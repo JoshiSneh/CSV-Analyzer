@@ -218,7 +218,7 @@ class AnalysisService:
             - Think step by step when generating the Python code based on the task plan.
             - Always see the previous tasks block of code and then generate the current task or future task by taking consideration of the current task description.
             - Handle the cases that can return nan or None from the previous task.
-            - Avoid using lambda inside the .apply() method on a DataFrame. Instead, use a named function whenever you need to apply a specific operation to the DataFrame.
+            - DONOT use lambda function inside the `.apply()` method. Instead, use a named function whenever you need to apply a specific operation to the DataFrame.
             - Ensure all DataFrame columns used in visualization or serialization are in JSON serializable formats, converting non-serializable types like pd.Period to strings using .astype(str) as needed for compatibility. 
             - Import all necessary libraries at the beginning of the code.
             - Example: import pandas as pd, import plotly.express as px.
