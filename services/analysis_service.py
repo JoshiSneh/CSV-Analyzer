@@ -295,14 +295,16 @@ class AnalysisService:
             - # Task Execution 
             [code implementing each task]
             Step-by-Step implementation of the task, sub-task plan based on the `df_task_plan`.
+
             #Task-1 with proper task description 
             #Sub-Task-1.1 with proper sub-task-1.1 description,
             #Sub-Task-1.2 with proper sub-task-1.2 description,
-            ...
+ 
             #Task2 with proper task description
             #Sub-Task-2.1 with proper sub-task-2.1 description,
             #Sub-Task-2.2 with proper sub-task-2.2 description,
-            ...
+            
+            [...]
 
             **Provide only the Correct Python Code which can be run with the `exec()`. Do not include any additional explanations or commentary**
             """).format(df_task_plan=st.session_state.task_plan,user_query=st.session_state.current_query,df_columns=', '.join(self.df.columns),df_types="\n".join([f"- **{col}**: {dtype}" for col, dtype in self.df.dtypes.items()]),df_str="\n".join([f"- **{col}**: {dtype}" for col, dtype in self.df.items()]))
