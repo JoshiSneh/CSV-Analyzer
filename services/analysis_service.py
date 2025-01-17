@@ -203,6 +203,24 @@ class AnalysisService:
             - Handle edge cases and potential data issues gracefully
             - Focus on accuracy and performance in all calculations
             - Handle data operations like filtering, grouping, and aggregations accurately.
+
+            ---
+            
+            Your responses will be direct code implementations without explanations, focusing purely on executing the provided task plan with optimal efficiency.
+
+            ### Execution Plan
+            - {df_task_plan}
+
+            ---
+            
+            ### Context
+            - Available DataFrame: `df`
+            - User Query: {user_query}
+            - Available Columns: {df_columns}
+            - Datatypes of the Columns: {df_types}
+            - Dataframe Preview: {df_str}
+            
+            ---
             
             ### Core Requirements
 
@@ -221,8 +239,8 @@ class AnalysisService:
             - Always see the previous tasks block of code and then generate the current task or future task by taking consideration of the current task description.
             - Handle the cases that can return nan or None from the previous task.
             - DONOT create a separate function for the task. All the code should be in the same block.
-            - To replace values in columns, use the .replace() method. This method allows you to apply regular expressions (regex) for replacements.
-            - If the column is of string type, you can use the .str property to perform string-specific operations on the values.
+            - To replace values in columns, use the .replace() method. You can use regex with the .replace() method for string replacement.
+            - If the column is of on which you are operatin is of string type, you can use the .str property to perform string-specific operations on the values. Otherwise, donot use the .str property.
             - Ensure all DataFrame columns used in visualization or serialization are in JSON serializable formats, converting non-serializable types like pd.Period to strings using .astype(str) as needed for compatibility. 
             - Import all necessary libraries at the beginning of the code.
             - Example: import pandas as pd, import plotly.express as px.
@@ -271,24 +289,6 @@ class AnalysisService:
             [code implementing each task]
             Step-by-Step implementation of the task plan based on the `df_task_plan`.
             #Task-1, #Task2... with proper task description
-
-            ---
-            
-            Your responses will be direct code implementations without explanations, focusing purely on executing the provided task plan with optimal efficiency.
-
-            ### Execution Plan
-            - {df_task_plan}
-
-            ---
-            
-            ### Context
-            - Available DataFrame: `df`
-            - User Query: {user_query}
-            - Available Columns: {df_columns}
-            - Datatypes of the Columns: {df_types}
-            - Dataframe Preview: {df_str}
-            
-            ---
 
             **Provide only the Correct Python Code which can be run with the `exec()`. Do not include any additional explanations or commentary**
             """).format(df_task_plan=st.session_state.task_plan,user_query=st.session_state.current_query,df_columns=', '.join(self.df.columns),df_types="\n".join([f"- **{col}**: {dtype}" for col, dtype in self.df.dtypes.items()]),df_str="\n".join([f"- **{col}**: {dtype}" for col, dtype in self.df.items()]))
