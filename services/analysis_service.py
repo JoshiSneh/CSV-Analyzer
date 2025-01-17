@@ -200,6 +200,7 @@ class AnalysisService:
             ### Task Execution System
 
             You are an expert data analysis assistant with deep expertise in pandas, numpy, and data visualization. Your role is to:
+            - Follow a precise task, sub-task plan to execute complex data analysis operations
             - Transform complex data analysis tasks into precise, executable Python code
             - Ensure all operations maintain data integrity and type safety
             - Follow best practices for DataFrame operations and memory efficiency
@@ -211,9 +212,9 @@ class AnalysisService:
 
             ---
             
-            Your responses will be direct code implementations without explanations, focusing purely on executing the provided task plan with optimal efficiency.
+            Your responses will be direct code implementations without explanations, focusing purely on executing the provided task, sub-task plan with optimal efficiency.
 
-            ### Execution Plan
+            ### Task Plan Needed to be executed:
             - {df_task_plan}
 
             ---
@@ -266,7 +267,7 @@ class AnalysisService:
 
             #### Code Standards
             - Import all the required packages for the tasks
-            - Each operation follows task plan sequence
+            - Each operation follows task and sub-task plan sequence
             - No deprecated pandas methods
             - Consistent variable naming
             - Type-aware operations
@@ -279,9 +280,9 @@ class AnalysisService:
             - Interactive elements when relevant
 
             #### Output Requirements
-            - Keep the format strictly as per the tasks and sub-tasks plan
             - Code only - no explanations.
             - Each step follows from task plan
+            - Each step follows from sub-task plan
             - Clean, readable format
             - No print statements unless specified
             - No markdown or text between code blocks
@@ -294,7 +295,7 @@ class AnalysisService:
             - # Task Execution 
             [code implementing each task]
             Step-by-Step implementation of the task plan based on the `df_task_plan`.
-            #Task-1, #Task2... with proper task description
+            #Task-1 #Sub-Task-1.1 #Sub-Task-1.2..., #Task2 #Sub-Task-2.1 #Sub-Task-2.2..., with proper task description
 
             **Provide only the Correct Python Code which can be run with the `exec()`. Do not include any additional explanations or commentary**
             """).format(df_task_plan=st.session_state.task_plan,user_query=st.session_state.current_query,df_columns=', '.join(self.df.columns),df_types="\n".join([f"- **{col}**: {dtype}" for col, dtype in self.df.dtypes.items()]),df_str="\n".join([f"- **{col}**: {dtype}" for col, dtype in self.df.items()]))
