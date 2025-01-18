@@ -258,7 +258,6 @@ class AnalysisService:
             - Use .str.strip() to remove leading and trailing spaces from strings before performing comparisons or transformations to ensure accuracy.
             - Leverage .str.contains() based on the context of the user query. Decide whether to directly compare the string or to use .str.contains() for partial matching, depending on the query's intent and specificity.
             - If for a operation a extraction of part is required from a string value then handle that carefully.
-            - For string extraction (e.g., using .str.extract()), ensure the regex pattern matches correctly and handles edge cases.
             - Always validate data structure before unpacking to ensure operations like string splitting or regex extraction return the expected elements. Use checks or defaults to handle missing elements.
             - Use multiple functions if required to achieve the desired result
             - If a final DataFrame is present, ensure it is NOT converted to a dictionary format. Retain the DataFrame in its original structure.
