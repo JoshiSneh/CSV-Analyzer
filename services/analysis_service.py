@@ -228,6 +228,7 @@ class AnalysisService:
             - Think step by step when generating the Python code based on the task plan.
             - Always see the previous tasks block of code and then generate the current task or future task by taking consideration of the current task description.
             - Handle the cases that can return nan or None from the previous task.
+            - Always generate the correct regex pattern for the string operations based on the values present in the columns.
             - DONOT create a separate function for the task. All the code should be in the same block.
             - To replace values in columns, use the .replace() method. You can use regex with the .replace() method for string replacement.
             - Ensure that the Python code utilizes the appropriate methods or functions accurately and efficiently, prioritizing correctness and optimal usage in all implementations.
