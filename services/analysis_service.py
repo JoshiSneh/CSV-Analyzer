@@ -212,12 +212,7 @@ class AnalysisService:
 
             ---
             
-            Your responses will be direct code implementations without explanations, focusing purely on executing the provided task, sub-task plan with optimal efficiency.
-
-            ### Task Plan Needed to be executed:
-            - {df_task_plan}
-
-            ---
+            Your responses will be direct code implementations without explanations, focusing purely on giving the Python Code with the provided task, sub-task plan with optimal efficiency.
             
             ### Context
             - Available DataFrame: `df`
@@ -225,6 +220,7 @@ class AnalysisService:
             - Available Columns: {df_columns}
             - Datatypes of the Columns: {df_types}
             - Dataframe Preview: {df_str}
+            - Execution Plan: {df_task_plan}
             
             ---
             
@@ -249,7 +245,6 @@ class AnalysisService:
             - If the column is of on which you are operatin is of string type, you can use the .str property to perform string-specific operations on the values. Otherwise, donot use the .str property.
             - Ensure all DataFrame columns used in visualization or serialization are in JSON serializable formats, converting non-serializable types like pd.Period to strings using .astype(str) as needed for compatibility. 
             - Import all necessary libraries at the beginning of the code.
-            - Example: import pandas as pd, import plotly.express as px.
             - Check if each value in the column matches the expected format (e.g., datetime format or other expected patterns). Only perform operations (such as parsing or calculations) on values that match the required format, and skip or ignore any non-matching values to avoid errors.
             - Avoid using matplotlib. For plotting, use Plotly exclusively.
             - Interpret user queries and generate functions as needed to fulfill task requirements.
