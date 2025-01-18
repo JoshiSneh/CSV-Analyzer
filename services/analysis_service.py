@@ -42,17 +42,6 @@ class AnalysisService:
             """
             ### Task Planning System
             You are a specialized task planning agent. Your role is to create precise, executable schema based task plans for analyzing DataFrame 'df'.
-            
-            ---
-
-            ### Input Context
-            - Available DataFrame: `df`
-            - User Query: {user_query}
-            - Available Columns: {df_columns}
-            - Datatypes of the Columns: {df_types}
-            - Dataframe Preview: {df_str}
-            
-            ---
 
             ### Core Requirements
             1. Each task must be:
@@ -60,13 +49,14 @@ class AnalysisService:
             - Each task and sub-task should involve Python code execution to derive results. For example, identifying trends or patterns should be explicitly linked to Python code that performs the necessary computations or visualizations, rather than being presented as a high-level instruction
             - Based solely on available columns. Do not assume additional data or columns
             - Focused on DataFrame operations
-            - Make sure all the data types are handled properly. Look for the data types first, `df_types`, of the columns and then give the task accordingly. Never assume the data types of the columns on your own
+            - Make sure all the data types are handled properly. Look for the data types first, of the columns and then give the task accordingly. Never assume the data types of the columns on your own
             - Contributing to the final solution
             - Evaluate the context of the user query to determine the appropriate string comparison method
             - Apply flexible string matching techniques when broader criteria are required
             - Building logically on previous steps
             - When doing string extraction from columns make sure to handle the existence or not
             - Make sure to handle all edge cases and potential data issues gracefully. For example, missing values, incorrect data types etc
+            - Plotly does not support non-serializable data types like Period. To ensure compatibility, convert dt.to_period() to serializable types, such as using .astype(str) to transform Period objects into strings
             - Do not generate tasks that can't be executed on the given dataframe and throw an error
             - Make sure all non-JSON serializable column types (e.g., pd.Period) in the DataFrame
             - Convert such columns to serializable formats like strings using .astype(str)
@@ -115,7 +105,6 @@ class AnalysisService:
             - Focus on DataFrame operations only
             - Always maintain the Keys formation in the `output_dict` as mentioned above. First word should start with uppercase with space separated words
 
-
             ### Output Format
             Task-1: [Precise action description]
                 Sub-Task-1.1: [Detailed breakdown of first component]
@@ -144,9 +133,9 @@ class AnalysisService:
                 - Values: [For each key, describe the expected value, including details of the information it should contain, formatted as a dictionary: {{"Key-1": "Description of the information contained in this key", "Key-2": "Description of the information contained in this key", ...}}]
 
             **Provide only the task plan description. Do not include any additional explanations or commentary or python code or output or any other information**
-            """).format(user_query=st.session_state.current_query,df_columns=', '.join(self.df.columns),df_types="\n".join([f"- **{col}**: {dtype}" for col, dtype in self.df.dtypes.items()]),df_str="\n".join([f"- **{col}**: {dtype}" for col, dtype in self.df.items()]))
+            """)
             
-            response = self.openai_service.create_completion_summary(task_planner_prompt)
+            response = self.openai_service.create_completion_task_planner(task_planner_prompt,available_columns=', '.join(self.df.columns),column_data_types="\n".join([f"- **{col}**: {dtype}" for col, dtype in self.df.dtypes.items()]),data_frame_preview="\n".join([f"- **{col}**: {dtype}" for col, dtype in self.df.items()]))
                     
             time.sleep(1)
             status.update(label="✅ Analysis Plan Generated!", state="complete")
@@ -163,12 +152,7 @@ class AnalysisService:
             exec_globals = {"df": self.df, "pd": pd, "px": px, "io": io, "np": np,"re":re}
             exec_locals = {}
 
-            # Capture stdout and stderr
-            stdout = io.StringIO()
-            stderr = io.StringIO()
-
-            with redirect_stdout(stdout), redirect_stderr(stderr):
-                exec(code, exec_globals, exec_locals)
+            exec(code, exec_globals, exec_locals)
             
             # st.warning(exec_locals)
             # Check if output_dict exists in the executed code
@@ -187,7 +171,10 @@ class AnalysisService:
             """
             ### Task Execution System
 
-            You are an expert data analysis assistant with deep expertise in pandas, numpy, and data visualization. Your role is to:
+            You are an expert data analysis assistant with deep expertise in pandas, numpy, and data visualization.Your responses will be direct code implementations without explanations, focusing purely on giving the Python Code with the provided task, sub-task plan with optimal efficiency.
+            
+            ### Role
+            Your role is to:
             - Follow a precise task, sub-task plan to execute complex data analysis operations
             - Transform complex data analysis tasks into precise, executable Python code
             - Ensure all operations maintain data integrity and type safety
@@ -197,24 +184,11 @@ class AnalysisService:
             - Handle edge cases and potential data issues gracefully
             - Focus on accuracy and performance in all calculations
             - Handle data operations like filtering, grouping, and aggregations accurately.
-
-            ---
-            
-            Your responses will be direct code implementations without explanations, focusing purely on giving the Python Code with the provided task, sub-task plan with optimal efficiency.
-            
-            ### Context
-            - Available DataFrame: `df`
-            - User Query: {user_query}
-            - Available Columns: {df_columns}
-            - Datatypes of the Columns: {df_types}
-            - Dataframe Preview: {df_str}
-            - Execution Plan: {df_task_plan}
-            
-            ---
             
             ### Core Requirements
 
             #### Data Operations
+            - Dataframe has been already loaded as `df`. Donot create the sample dataframe. Use the existing dataframe `df` for all the operations.
             - All operations must use exact column names from `df_columns`
             - DONOT assume datatypes from your own. Always look into `df_types` for the datatypes of the columns. Donot assume float as a string and do operation of string on it. Same for others type
             - Use the columns name accurately given in the `df_task_plan`
@@ -229,15 +203,14 @@ class AnalysisService:
             - Always see the previous tasks block of code and then generate the current task or future task by taking consideration of the current task description.
             - Handle the cases that can return nan or None from the previous task.
             - Always generate the correct regex pattern for the string operations based on the values present in the columns.
-            - DONOT create a separate function for the task. All the code should be in the same block.
             - To replace values in columns, use the .replace() method. You can use regex with the .replace() method for string replacement.
             - Ensure that the Python code utilizes the appropriate methods or functions accurately and efficiently, prioritizing correctness and optimal usage in all implementations.
-            - Ensure all DataFrame columns used in visualization or serialization are in JSON serializable formats, converting non-serializable types like pd.Period to strings using .astype(str) as needed for compatibility. 
+            - Ensure all DataFrame columns used are in JSON serializable formats, converting non-serializable types like `pd.Period` to strings using .astype(str) as needed for compatibility. 
             - Import all necessary libraries at the beginning of the code.
             - Check if each value in the column matches the expected format (e.g., datetime format or other expected patterns). Only perform operations (such as parsing or calculations) on values that match the required format, and skip or ignore any non-matching values to avoid errors.
             - Avoid using matplotlib. For plotting, use Plotly exclusively.
             - Interpret user queries and generate functions as needed to fulfill task requirements.
-            - Use functions like pd.to_datetime() to convert columns when necessary.
+            - Use functions pd.to_datetime() to convert columns to the date format whenever necessary.
             - Add checks or use np.divide with where or np.errstate to handle division by zero safely.
             - Use .str.strip() to remove leading and trailing spaces from strings before performing comparisons or transformations to ensure accuracy.
             - If a final DataFrame is present, ensure it is NOT converted to a dictionary format. Retain the DataFrame in its original structure.
@@ -286,9 +259,9 @@ class AnalysisService:
             [...]
 
             **Provide only the Correct Python Code which can be run with the `exec()`. Do not include any additional explanations or commentary**
-            """).format(df_task_plan=st.session_state.task_plan,user_query=st.session_state.current_query,df_columns=', '.join(self.df.columns),df_types="\n".join([f"- **{col}**: {dtype}" for col, dtype in self.df.dtypes.items()]),df_str="\n".join([f"- **{col}**: {dtype}" for col, dtype in self.df.items()]))
+            """)
 
-            response = self.openai_service.create_completion_summary(task_execution_prompt)
+            response = self.openai_service.create_completion_code_generation(task_execution_prompt,st.session_state.task_plan,available_columns=', '.join(self.df.columns),column_data_types="\n".join([f"- **{col}**: {dtype}" for col, dtype in self.df.dtypes.items()]),data_frame_preview="\n".join([f"- **{col}**: {dtype}" for col, dtype in self.df.items()]))
                         
             time.sleep(1.5) 
             status.update(label="✅ Code Generated!", state="complete")
