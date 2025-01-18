@@ -239,7 +239,6 @@ class AnalysisService:
             - Use functions like pd.to_datetime() to convert columns when necessary.
             - Add checks or use np.divide with where or np.errstate to handle division by zero safely.
             - Use .str.strip() to remove leading and trailing spaces from strings before performing comparisons or transformations to ensure accuracy.
-            - Use multiple functions if required to achieve the desired result
             - If a final DataFrame is present, ensure it is NOT converted to a dictionary format. Retain the DataFrame in its original structure.
             - Reset the indexs of the final dataframes before giving the final result.
             - Always final output should be stored in a variable named `output_dict` with all the necessary information.
