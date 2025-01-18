@@ -143,18 +143,6 @@ class AnalysisService:
                 - Key Names: [Provide all the key names used in the `output_dict` dictionary.]
                 - Values: [For each key, describe the expected value, including details of the information it should contain, formatted as a dictionary: {{"Key-1": "Description of the information contained in this key", "Key-2": "Description of the information contained in this key", ...}}]
 
-            ### Example Task Breakdown
-             - The below is an example of how the task breakdown should be structured. Follow the same structure for each task in the task plan.
-
-             - Task-1: Extract start and end times from the 'Transaction Description' column and calculate the duration of each transaction in hours.
-                Sub-Task-1.2: Extract start time using regex pattern matching
-                Sub-Task-1.3: Convert extracted start time to datetime format
-                Sub-Task-1.4: Extract end time using regex pattern matching
-                Sub-Task-1.5: Convert extracted end time to datetime format
-                Sub-Task-1.6: Calculate duration in hours between start and end times
-                Sub-Task-1.7: Handle invalid time formats and edge cases
-                Sub-Task-1.8: Create new column 'Duration_Hours' with calculated values
-
             **Provide only the task plan description. Do not include any additional explanations or commentary or python code or output or any other information**
             """).format(user_query=st.session_state.current_query,df_columns=', '.join(self.df.columns),df_types="\n".join([f"- **{col}**: {dtype}" for col, dtype in self.df.dtypes.items()]),df_str="\n".join([f"- **{col}**: {dtype}" for col, dtype in self.df.items()]))
             
@@ -242,7 +230,7 @@ class AnalysisService:
             - Handle the cases that can return nan or None from the previous task.
             - DONOT create a separate function for the task. All the code should be in the same block.
             - To replace values in columns, use the .replace() method. You can use regex with the .replace() method for string replacement.
-            - If the column is of on which you are operatin is of string type, you can use the .str property to perform string-specific operations on the values. Otherwise, donot use the .str property.
+            - Ensure that the Python code utilizes the appropriate methods or functions accurately and efficiently, prioritizing correctness and optimal usage in all implementations.
             - Ensure all DataFrame columns used in visualization or serialization are in JSON serializable formats, converting non-serializable types like pd.Period to strings using .astype(str) as needed for compatibility. 
             - Import all necessary libraries at the beginning of the code.
             - Check if each value in the column matches the expected format (e.g., datetime format or other expected patterns). Only perform operations (such as parsing or calculations) on values that match the required format, and skip or ignore any non-matching values to avoid errors.
