@@ -38,8 +38,7 @@ class AnalysisService:
         """Generate analysis plan."""
         with st.status("Generating Analysis Plan") as status:
 
-            task_planner_prompt = (
-            """
+            task_planner_prompt = """
             ### Task Planning System
             You are a specialized task planning agent. Your role is to create precise, executable schema based task plans for analyzing DataFrame 'df'.
 
@@ -133,7 +132,7 @@ class AnalysisService:
                 - Values: [For each key, describe the expected value, including details of the information it should contain, formatted as a dictionary: {{"Key-1": "Description of the information contained in this key", "Key-2": "Description of the information contained in this key", ...}}]
 
             **Provide only the task plan description. Do not include any additional explanations or commentary or python code or output or any other information**
-            """)
+            """
             
             response = self.openai_service.create_completion_task_planner(task_planner_prompt,available_columns=', '.join(self.df.columns),column_data_types="\n".join([f"- **{col}**: {dtype}" for col, dtype in self.df.dtypes.items()]),data_frame_preview="\n".join([f"- **{col}**: {dtype}" for col, dtype in self.df.items()]))
                     
@@ -167,8 +166,7 @@ class AnalysisService:
     def _generate_code(self):
         """Generating Code"""
         with st.status("Generating Code") as status:
-            task_execution_prompt = (
-            """
+            task_execution_prompt ="""
             ### Task Execution System
 
             You are an expert data analysis assistant with deep expertise in pandas, numpy, and data visualization.Your responses will be direct code implementations without explanations, focusing purely on giving the Python Code with the provided task, sub-task plan with optimal efficiency.
@@ -259,7 +257,7 @@ class AnalysisService:
             [...]
 
             **Provide only the Correct Python Code which can be run with the `exec()`. Do not include any additional explanations or commentary**
-            """)
+            """
 
             response = self.openai_service.create_completion_code_generation(task_execution_prompt,st.session_state.task_plan,available_columns=', '.join(self.df.columns),column_data_types="\n".join([f"- **{col}**: {dtype}" for col, dtype in self.df.dtypes.items()]),data_frame_preview="\n".join([f"- **{col}**: {dtype}" for col, dtype in self.df.items()]))
                         
