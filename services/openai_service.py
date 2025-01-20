@@ -55,14 +55,26 @@ class OpenAIService:
         )
         return response
     
-    def create_completion_summary(self, prompt, model="gpt-4o-mini", temperature=0):
+    def create_completion_summary(self, summary_prompt,summary_data,graph_data):
         """Create OpenAI chat completion."""
         response = self.client.chat.completions.create(
-            model=model,
-            temperature=temperature,
+            model="gpt-4o-mini", 
+            temperature=0,
             messages=[
-                {"role": "system", "content": prompt},
-                {"role": "user", "content": st.session_state.current_query}
+                {"role": "system", "content": summary_prompt},
+                {"role": "user", "content": f"===User Summary Data:\n{summary_data}\n\n===User Visualization Data:\n{graph_data}\n\n===User Question:\n{st.session_state.current_query}\n\n"}
+            ]
+        )
+        return response
+    
+    def create_followup_generation(self, follow_up_prompt,available_columns,data_frame_preview):
+        """Create OpenAI chat completion."""
+        response = self.client.chat.completions.create(
+            model="gpt-4o-mini", 
+            temperature=0.1,
+            messages=[
+                {"role": "system", "content": follow_up_prompt},
+                {"role": "user", "content": f"===Dataframe Schema:\n{data_frame_preview}\n\n===Available Columns:\n{available_columns}\n\n===User Question:\n{st.session_state.current_query}\n\n"}
             ]
         )
         return response

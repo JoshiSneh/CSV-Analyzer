@@ -294,12 +294,17 @@ class AnalysisService:
 
             visual = False
             
+            summary_data = {}
+            graph_data = {}
+            
             if output_dict:
                 for key, value in output_dict.items():
                     if isinstance(value, pd.DataFrame):
                             st.write(f"📈 {key}")
                             st.dataframe(value, use_container_width=True)
                             
+                            summary_data[key] = value.to_json()
+
                             buffer = io.StringIO()
                             value.to_csv(buffer, index=False)
                             st.download_button(
@@ -311,23 +316,26 @@ class AnalysisService:
                     elif isinstance(value, go.Figure):
                         st.plotly_chart(value, use_container_width=True)
                         # graph_visual[key] = value.to_json()
+                        graph_data[key] = value.to_plotly_json()
                         visual = True
                     else:
                         st.warning(f"{key}: {value}")
+                        summary_data[key] = value
 
                 if visual == False:
-                    output_dict["fig"] = None
+                    graph_data["fig"] = None
                 
                 time.sleep(1.0) 
                 status.update(label="✅ Code Executed!", state="complete")
 
                 st.session_state.execution_complete = True
-                st.session_state.execution = output_dict
+                st.session_state.summary_data = summary_data
+                st.session_state.graph_data = graph_data
 
     def _generate_summary(self):
         """Generate analysis summary."""
         with st.status("Generating Insights") as status:
-            summary_prompt = ("""
+            summary_prompt ="""
             ### Data Summary Assistant
 
             ### Role
@@ -337,9 +345,6 @@ class AnalysisService:
             - Identifying meaningful patterns and relationships
             - Creating concise, impactful summaries
             - Explaining data visualizations effectively
-
-            ### Input Context (User Question)
-            {user_question}
             
             ### Summary Structure
 
@@ -387,15 +392,12 @@ class AnalysisService:
 
             ### Key Insights
             [Bullet points of main findings]
-
-            ### Input Context (User Answer)
-            {user_answer}
             
             ### Data Visualization
             [Only if figure exists - visualization analysis] Other wise, remove this section. Donot include this section if no visualization is present.
-            """).format(user_question=st.session_state.current_query,user_answer=st.session_state.execution)
-
-            response = self.openai_service.create_completion_summary(summary_prompt)
+            """
+            
+            response = self.openai_service.create_completion_summary(summary_prompt,st.session_state.summary_data,st.session_state.graph_data)
                         
             time.sleep(1)
             status.update(label="✅ Insights Generated!", state="complete")
@@ -409,22 +411,17 @@ class AnalysisService:
     def _generate_questions(self):
         """Generate follow-up questions."""
         with st.status("Generating Questions") as status:
-            follow_up_prompt = ("""
+            follow_up_prompt = """
             # Follow-up Question Generator
 
-            ## Role
+            ### Role
             You are a precise data insight explorer who:
             - Generates follow-up questions based strictly on available data
             - Ensures questions are directly answerable using the dataset
             - Maintains focus on business value and actionable insights
             - Avoids assumptions or speculation beyond the data
 
-            ## Input
-            - Current Question: {user_question}
-            - Available Columns: {df_columns}
-            - Data Sample: {df_head}
-
-            ## Core Requirements
+            ### Core Requirements
 
             ### Question Generation Rules
             - Maximum 3 questions total
@@ -442,16 +439,16 @@ class AnalysisService:
             - No redundancy with original question
             - Feasible to answer with given columns
 
-            ## Output Format
+            ### Output Format
 
             1. [Precise question using available data] - [Brief business context and value]
 
             2. [Precise question using available data] - [Brief business context and value]
 
             3. [Precise question using available data] - [Brief business context and value]
-            """).format(user_question=st.session_state.current_query,df_columns=', '.join(self.df.columns),df_head=self.df.head(1).to_markdown())
+            """
             
-            response = self.openai_service.create_completion_summary(follow_up_prompt)
+            response = self.openai_service.create_followup_generation(follow_up_prompt,available_columns=', '.join(self.df.columns),data_frame_preview=self.df.head(1).to_markdown())
             
             time.sleep(1)
             status.update(label="✅ Questions Generated!", state="complete")

@@ -16,7 +16,7 @@ def setup_session_state():
         st.session_state.current_query = None
     if 'task_plan' not in st.session_state:
         st.session_state.task_plan = None
-    if 'execution' not in st.session_state:
-        st.session_state.execution = None
-    if 'code' not in st.session_state:
-        st.session_state.code = None
+    if 'summary_data' not in st.session_state:
+        st.session_state.summary_data = None
+    if 'graph_data' not in st.session_state:
+        st.session_state.graph_data = None
