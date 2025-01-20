@@ -362,7 +362,6 @@ class AnalysisService:
             - Bullet points of significant findings
             - Relevant metrics and numbers
             - Important trends or patterns
-            - Statistical significance where applicable
             - Business implications when clear
 
             3. Data Visualization Section (Only if fig is not None)
