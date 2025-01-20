@@ -304,9 +304,7 @@ class AnalysisService:
                             st.dataframe(value, use_container_width=True)
                             
 
-                            summary_data[key] = value.to_json()
-                            summary_data[f"Number of Rows of dataframe{key}"] = value.shape[0]
-                            summary_data[f"Number of Columns of dataframe{key}"] = value.shape[1]
+                            summary_data[key] = value.to_markdown()
 
                             buffer = io.StringIO()
                             value.to_csv(buffer, index=False)
