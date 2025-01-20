@@ -303,8 +303,7 @@ class AnalysisService:
                             st.write(f"📈 {key}")
                             st.dataframe(value, use_container_width=True)
                             
-
-                            summary_data[key] = value.to_markdown()
+                            summary_data[key] = value
 
                             buffer = io.StringIO()
                             value.to_csv(buffer, index=False)
@@ -333,6 +332,8 @@ class AnalysisService:
                 st.session_state.summary_data = summary_data
                 st.session_state.graph_data = graph_data
 
+                # print(st.session_state.summary_data)
+
     def _generate_summary(self):
         """Generate analysis summary."""
         with st.status("Generating Insights") as status:
@@ -357,13 +358,15 @@ class AnalysisService:
             - Brief context if necessary
 
             2. Key Insights Section
+            - Use `summary_data` for generating summary based on the user query
             - Bullet points of significant findings
             - Relevant metrics and numbers
             - Important trends or patterns
             - Statistical significance where applicable
             - Business implications when clear
 
-            3. Data Visualization Section (Only if fig exists)
+            3. Data Visualization Section (Only if fig is not None)
+            - Use `graph_data` for visualization analysis
             - Description of visualization type
             - Main trends or patterns shown
             - Specific data points of interest
@@ -371,7 +374,6 @@ class AnalysisService:
 
             ### Quality Standards
             - Use clear, professional language
-            - Focus on facts present in output_dict
             - Maintain logical flow of information
             - Avoid technical jargon unless necessary
             - Keep insights directly relevant to query
@@ -395,9 +397,9 @@ class AnalysisService:
             [Bullet points of main findings]
             
             ### Data Visualization
-            [Only if figure exists - visualization analysis] Other wise, remove this section. Donot include this section if no visualization is present.
+            [Only if figure is not None - visualization analysis] Other wise, remove this section. Donot include this section if no visualization is present.
             """
-            
+            # "\n".join([f"- **{col}**: {value}" for col, value in st.session_state.summary_data.items()])
             response = self.openai_service.create_completion_summary(summary_prompt,st.session_state.summary_data,st.session_state.graph_data)
                         
             time.sleep(1)

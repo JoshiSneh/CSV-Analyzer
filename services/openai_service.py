@@ -57,6 +57,7 @@ class OpenAIService:
     
     def create_completion_summary(self, summary_prompt,summary_data,graph_data):
         """Create OpenAI chat completion."""
+        # print(summary_data)
         response = self.client.chat.completions.create(
             model="gpt-4o-mini", 
             temperature=0,
