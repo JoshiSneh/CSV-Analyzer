@@ -353,7 +353,8 @@ class AnalysisService:
             ### 1. Summary Structure
 
             **Summary**
-            - Direct answer to the user's question
+            - Direct answer to user query
+            - Use [User Summary Data] for generating summary based on the user query
             - 1-2 sentences of essential context (if needed)
             - Main takeaway
 
