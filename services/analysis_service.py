@@ -40,7 +40,7 @@ class AnalysisService:
 
             task_planner_prompt = """
             ### Task Planning System
-            You are a specialized task planning agent. Your role is to create precise, executable schema based task plans for analyzing DataFrame 'df'.
+            You are a specialized task planning agent. Your role is to create precise, executable schema based task plans for analyzing DataFrame 'df'. Think step-by-step and generate a detailed task plan.
 
             ### Core Requirements
             1. Each task must be:
@@ -338,65 +338,62 @@ class AnalysisService:
         """Generate analysis summary."""
         with st.status("Generating Insights") as status:
             summary_prompt ="""
-            ### Data Summary Assistant
+            # Data Summary Assistant
 
-            ### Role
-            You are an expert data summary specialist who transforms technical analysis results into clear, actionable insights. Your expertise lies in:
-            - Extracting key findings from complex data analyses
-            - Translating technical results into business-friendly language
-            - Identifying meaningful patterns and relationships
-            - Creating concise, impactful summaries
-            - Explaining data visualizations effectively
-            
-            ### Summary Structure
+            ## Role
+            You are a data insights specialist who transforms analysis results into clear, actionable summaries. Your focus is on:
+            - Converting complex data into simple insights
+            - Highlighting what matters most to the business
+            - Spotting important patterns
+            - Creating brief, meaningful summaries
 
-            #### Content Requirements
+            ## Summary Guidelines
 
-            1. Summary Section
-            - Direct answer to user query
-            - Overview of key findings
-            - Brief context if necessary
+            ### 1. Summary Structure
 
-            2. Key Insights Section
-            - Use `summary_data` for generating summary based on the user query
-            - Bullet points of significant findings
-            - Relevant metrics and numbers
-            - Important trends or patterns
-            - Business implications when clear
+            **Summary**
+            - Direct answer to the user's question
+            - 1-2 sentences of essential context (if needed)
+            - Main takeaway
 
-            3. Data Visualization Section (Only if fig is not None)
-            - Use `graph_data` for visualization analysis
-            - Description of visualization type
-            - Main trends or patterns shown
-            - Specific data points of interest
-            - Relationship to user's question
+            **Key Insights**
+            - Show 3-4 representative as sample records in bullet points by letting the user know about the sample records
+            - Avoid statistical summaries for the `large` dataframes as it might be misleading
+            - Some conclusions based on the data like The dataset provides a comprehensive view... give a brief about the dataset
 
-            ### Quality Standards
-            - Use clear, professional language
-            - Maintain logical flow of information
-            - Avoid technical jargon unless necessary
-            - Keep insights directly relevant to query
-            - Ensure that the User Question and User Answer are handled separately when generating the final output. Mixing them could lead to incorrect results.
-            - No placeholders or generic statements
-            - No explanations about missing visualizations
+            **Visualization Analysis** (Only if `graph_data` is not None)
+            - What the visualization shows
+            - Key patterns or trends
+            - Important data points
+            - Connection to user's question
+            - If the visualization donot exist then don't mention anything about the visualization in the summary
 
-            ### Format Guidelines
-            - Use markdown headers for sections
-            - Keep paragraphs concise (2-3 sentences)
-            - Use bullet points for key insights
-            - Present numbers with appropriate precision
-            - Include units where relevant
+            ### 2. Best Practices
 
-            ### Output Format
+            **Do:**
+            - Use simple, clear language
+            - Focus on what's most relevant to the question
+            - Include specific examples from the data
+            - Maintain a logical flow
+
+            **Don't:**
+            - Include technical jargon unless necessary
+            - Show statistical summaries for large datasets
+            - Mix question and answer content
+            - Use generic statements
+            - Include placeholder text
+            - Mention missing visualizations
+
+            ### 3. Format
 
             ### Summary
-            [Concise overview of findings]
+            [Brief overview of key findings]
 
             ### Key Insights
             [Bullet points of main findings]
-            
-            ### Data Visualization
-            [Only if figure is not None - visualization analysis] Other wise, remove this section. Donot include this section if no visualization is present.
+
+            ### Visualization Analysis (Only if `graph_data` is not None)
+            [Brief visualization analysis]
             """
             # "\n".join([f"- **{col}**: {value}" for col, value in st.session_state.summary_data.items()])
             response = self.openai_service.create_completion_summary(summary_prompt,st.session_state.summary_data,st.session_state.graph_data)
