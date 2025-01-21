@@ -187,18 +187,19 @@ class AnalysisService:
 
             #### Data Operations
             - Dataframe has been already loaded as `df`. Donot create the sample dataframe. Use the existing dataframe `df` for all the operations.
-            - All operations must use exact column names from `df_columns`
-            - DONOT assume datatypes from your own. Always look into `df_types` for the datatypes of the columns. Donot assume float as a string and do operation of string on it. Same for others type
-            - Use the columns name accurately given in the `df_task_plan`
+            - All operations must use exact column names from [Available Columns]
+            - Donot assume float as a string and do operation of string on it. Same for others type
+            - Use the columns name accurately given in the [Execution Plan]
             - Never use any random or vague column names for the dataframe operations
             - Intermediate results stored as pandas DataFrames
             - Variables must have descriptive names reflecting their content
-            - All calculations must preserve data types specified in `df_types`
+            - All calculations must preserve data types specified in [Column Data Types]
             - Donot fill null values with any another values
             
             #### Instructions for Generating Python Code (to be followed strictly):
             - Think step by step when generating the Python code based on the task plan.
             - Always see the previous tasks block of code and then generate the current task or future task by taking consideration of the current task description.
+            - DONOT assume datatypes from your own. Always look into [Column Data Types] for the datatypes of the columns.
             - Handle the cases that can return nan or None from the previous task.
             - Always generate the correct regex pattern for the string operations based on the values present in the columns.
             - To replace values in columns, use the .replace() method. You can use regex with the .replace() method for string replacement.
@@ -361,7 +362,7 @@ class AnalysisService:
             - Avoid statistical summaries for the `large` dataframes as it might be misleading
             - Some conclusions based on the data like The dataset provides a comprehensive view... give a brief about the dataset
 
-            **Visualization Analysis** (Only if `graph_data` is not None)
+            **Visualization Analysis** (Only if `User Visualization Data` is not None)
             - What the visualization shows
             - Key patterns or trends
             - Important data points
@@ -392,7 +393,7 @@ class AnalysisService:
             ### Key Insights
             [Bullet points of main findings]
 
-            ### Visualization Analysis (Only if `graph_data` is not None)
+            ### Visualization Analysis (Only if `User Visualization Data` is not None)
             [Brief visualization analysis]
             """
             # "\n".join([f"- **{col}**: {value}" for col, value in st.session_state.summary_data.items()])
