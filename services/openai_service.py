@@ -35,7 +35,7 @@ class OpenAIService:
         """Create OpenAI chat completion."""
         response = self.client.chat.completions.create(
             model="gpt-4o",
-            temperature=1.0,
+            temperature=0,
             messages=[
                 {"role": "system", "content": task_planner_prompt},
                 {"role": "user", "content": f"===Dataframe Schema:\n{data_frame_preview}\n\n===Available Columns:\n{available_columns}\n\n===Column Data Types:\n{column_data_types}\n\n===User Question:\n{st.session_state.current_query}\n"}
@@ -60,7 +60,7 @@ class OpenAIService:
         # print(summary_data)
         response = self.client.chat.completions.create(
             model="gpt-4o-mini", 
-            temperature=1.0,
+            temperature=0.5,
             messages=[
                 {"role": "system", "content": summary_prompt},
                 {"role": "user", "content": f"===User Summary Data:\n{summary_data}\n\n===User Visualization Data:\n{graph_data}\n\n===User Question:\n{st.session_state.current_query}\n\n"}
