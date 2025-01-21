@@ -69,7 +69,7 @@ csv-analyzer/
 
 ## Key Components 🔧
 
-1. **Data Upload**: Supports CSV file upload with preview functionality
+1. **Data Upload**: Supports CSV/EXCEL file upload with preview functionality
 2. **Query Processing**: Natural language processing using OpenAI GPT models
 3. **Analysis Pipeline**:
    - Task Planning: Breaks down user query into actionable steps
