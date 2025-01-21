@@ -13,7 +13,7 @@ class OpenAIService:
             
             if api_key:
                 st.session_state.openai_api_key = api_key
-                self.client = OpenAI(base_url="https://api.deepseek.com",api_key=api_key)
+                self.client = OpenAI(api_key=api_key)
                 return True
             else:
                 st.warning("Please enter your API key")
@@ -34,7 +34,7 @@ class OpenAIService:
     def create_completion_task_planner(self, task_planner_prompt,available_columns,column_data_types,data_frame_preview):
         """Create OpenAI chat completion."""
         response = self.client.chat.completions.create(
-            model="deepseek-chat",
+            model="gpt-4o",
             temperature=1.0,
             messages=[
                 {"role": "system", "content": task_planner_prompt},
@@ -46,7 +46,7 @@ class OpenAIService:
     def create_completion_code_generation(self, task_execution_prompt,execution_plan,available_columns,column_data_types,data_frame_preview):
         """Create OpenAI chat completion."""
         response = self.client.chat.completions.create(
-            model="deepseek-chat",
+            model="gpt-4o",
             temperature=0,
             messages=[
                 {"role": "system", "content": task_execution_prompt},
@@ -59,7 +59,7 @@ class OpenAIService:
         """Create OpenAI chat completion."""
         # print(summary_data)
         response = self.client.chat.completions.create(
-            model="deepseek-chat", 
+            model="gpt-4o-mini", 
             temperature=1.0,
             messages=[
                 {"role": "system", "content": summary_prompt},
@@ -71,7 +71,7 @@ class OpenAIService:
     def create_followup_generation(self, follow_up_prompt,available_columns,data_frame_preview):
         """Create OpenAI chat completion."""
         response = self.client.chat.completions.create(
-            model="deepseek-chat", 
+            model="gpt-4o-mini", 
             temperature=1.0,
             messages=[
                 {"role": "system", "content": follow_up_prompt},
