@@ -360,7 +360,7 @@ class AnalysisService:
 
             **Key Insights**
             - Show 3-4 representative as sample records in bullet points by letting the user know about the sample records
-            - Avoid statistical summaries for the `large` dataframes as it might be misleading
+            - Avoid statistical summaries for the large dataframes as it might be misleading
             - Some conclusions based on the data like The dataset provides a comprehensive view... give a brief about the dataset
 
             **Visualization Analysis** (Only if `User Visualization Data` is not None)
@@ -380,7 +380,7 @@ class AnalysisService:
 
             **Don't:**
             - Include technical jargon unless necessary
-            - Show statistical summaries for large datasets
+            - Show statistical summaries for large dataframes
             - Mix question and answer content
             - Use generic statements
             - Include placeholder text
