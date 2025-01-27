@@ -46,7 +46,7 @@ class OpenAIService:
     def create_completion_code_generation(self, task_execution_prompt,execution_plan,available_columns,column_data_types,data_frame_preview):
         """Create OpenAI chat completion."""
         response = self.client.chat.completions.create(
-            model="gpt-4o",
+            model="gpt-4o-mini",
             temperature=0,
             messages=[
                 {"role": "system", "content": task_execution_prompt},
