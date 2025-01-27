@@ -45,7 +45,7 @@ class AnalysisService:
 
             ### Core Requirements
             1. Each task must be:
-            - Specific and directly executable with the `exec()` function of Python
+            - Specific and directly executable with the `exec()` function of Python.
             - Each task and sub-task should involve Python code execution to derive results. For example, identifying trends or patterns should be explicitly linked to Python code that performs the necessary computations or visualizations, rather than being presented as a high-level instruction
             - Based solely on available columns. Do not assume additional data or columns
             - Focused on DataFrame operations
@@ -106,29 +106,29 @@ class AnalysisService:
             - Always maintain the Keys formation in the `output_dict` as mentioned above. First word should start with uppercase with space separated words
 
             ### Output Format
-            Task-1: [Precise action description]
-                Sub-Task-1.1: [Detailed breakdown of first component]
-                Sub-Task-1.2: [Detailed breakdown of second component]
+            Task-1: Precise action description
+                Sub-Task-1.1: Detailed breakdown of first component
+                Sub-Task-1.2: Detailed breakdown of second component
                 ...
-                Sub-Task-1.n: [Final component of Task-1]
+                Sub-Task-1.n: Final component of Task-1
                 - Column Names: [Provide all the column names used for Task-1, formatted as a comma-separated list:
                 ["Column-1", "Column-2", "Column-3", ...]]
 
-            Task-2: [Precise action description]
-                Sub-Task-2.1: [Detailed breakdown of first component]
-                Sub-Task-2.2: [Detailed breakdown of second component]
+            Task-2: Precise action description
+                Sub-Task-2.1: Detailed breakdown of first component
+                Sub-Task-2.2: Detailed breakdown of second component
                 ...
-                Sub-Task-2.n: [Final component of Task-2]
+                Sub-Task-2.n: Final component of Task-2
                 - Column Names: [Provide all the column names used for Task-2, formatted as a comma-separated list:
                 ["Column-1", "Column-2", "Column-3", ...]]
 
             [...]
 
-            Task-N: [Precise action description - Compile the processed results and store them in the final output dictionary named `output_dict`]
-                Sub-Task-N.1: [Detailed breakdown of first component]
-                Sub-Task-N.2: [Detailed breakdown of second component]
+            Task-N: Precise action description - Compile the processed results and store them in the final output dictionary named `output_dict`
+                Sub-Task-N.1: Detailed breakdown of first component
+                Sub-Task-N.2: Detailed breakdown of second component
                 ...
-                Sub-Task-N.n: [Final component of Task-N]
+                Sub-Task-N.n: Final component of Task-N
                 - Key Names: [Provide all the key names used in the `output_dict` dictionary.]
                 - Values: [For each key, describe the expected value, including details of the information it should contain, formatted as a dictionary: {{"Key-1": "Description of the information contained in this key", "Key-2": "Description of the information contained in this key", ...}}]
 
