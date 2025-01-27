@@ -5,6 +5,7 @@ import plotly.graph_objects as go
 import io
 import plotly.express as px
 import numpy as np
+from datetime import datetime as dt
 import re
 from contextlib import redirect_stdout, redirect_stderr
 
@@ -148,7 +149,7 @@ class AnalysisService:
     def _execute_task_code(self,code):
         
         try:
-            exec_globals = {"df": self.df, "pd": pd, "px": px, "io": io, "np": np,"re":re}
+            exec_globals = {"df": self.df, "pd": pd, "px": px, "io": io, "np": np,"re":re,"dt":dt,"go":go}
             exec_locals = {}
 
             exec(code, exec_globals, exec_locals)
